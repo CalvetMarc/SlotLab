@@ -4,13 +4,13 @@ import { DebugPanel } from "./ui/DebugPanel";
 import { SpinResult } from "./types/SpinResult";
 
 // --- Crear app Pixi ---
-const app = new Application({
+const app = new Application();
+await app.init({
   width: window.innerWidth,
-  height: window.innerHeight,  // 🔹 Fa que ocupi tota la finestra i es redimensioni automàticament
-  background: "#000000",
+  height: window.innerHeight,
+  backgroundColor: "#3d3838ff", // 🔴 correcte
   antialias: true,
 });
-await app.init();
 
 document.body.appendChild(app.canvas);
 
