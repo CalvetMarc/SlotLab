@@ -7,17 +7,19 @@ namespace SlotLab.Engine.Core
         private readonly int visibleRows;
         private readonly int preCount;
         private readonly int postCount;
+        private readonly List<List<string>> gameStrips;
         protected ISymbolsProvider Super => ((ISymbolsProvider)this);
 
 
-        public ReelsSymbolsProvider_Default(int visibleRows, int preCount = 2, int postCount = 2)
+        public ReelsSymbolsProvider_Default(List<List<string>> gameStrips, int visibleRows, int preCount = 2, int postCount = 2)
         {
             this.visibleRows = visibleRows;
             this.preCount = preCount;
             this.postCount = postCount;
+            this.gameStrips = gameStrips;
         }
 
-        public SpinResultData Spin(List<List<string>> gameStrips)
+        public SpinResultData Spin()
         {
             var visibleWindow = new List<List<string>>();
             var preRoll = new List<List<string>>();

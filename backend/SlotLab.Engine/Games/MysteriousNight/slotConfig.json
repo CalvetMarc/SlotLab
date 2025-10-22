@@ -1,0 +1,69 @@
+{
+  "gameId": "mysteriousNight",
+  "rows": 3,
+  "columns": 5,
+  "paylines": [
+    [1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0],
+    [2, 2, 2, 2, 2],
+    [0, 1, 2, 1, 0],
+    [2, 1, 0, 1, 2],
+    [0, 0, 1, 0, 0],
+    [2, 2, 1, 2, 2],
+    [0, 1, 1, 1, 0],
+    [2, 1, 1, 1, 2],
+    [1, 0, 0, 0, 1],
+    [1, 2, 2, 2, 1],
+    [1, 0, 1, 0, 1],
+    [1, 2, 1, 2, 1],
+    [0, 0, 1, 1, 0],
+    [2, 2, 1, 1, 2],
+    [0, 1, 0, 1, 0],
+    [2, 1, 2, 1, 2],
+    [0, 0, 1, 2, 2],
+    [2, 2, 1, 0, 0],
+    [1, 1, 0, 0, 1]
+  ],
+  "symbols": ["J", "Q", "K", "A", "Wolf", "Queen", "King", "Wild", "Scatter"],
+  "paytable": {
+    "J": { "x3": 0.3, "x4": 0.65, "x5": 1.5 },
+    "Q": { "x3": 0.3, "x4": 0.65, "x5": 1.5 },
+    "K": { "x3": 0.3, "x4": 0.65, "x5": 1.5 },
+    "A": { "x3": 0.3, "x4": 0.65, "x5": 1.5 },
+    "Wolf": { "x3": 1, "x4": 3, "x5": 6 },
+    "Queen": { "x3": 1.5, "x4": 4.5, "x5": 7 },
+    "King": { "x3": 2, "x4": 8, "x5": 25 }
+  },
+  "strips": [
+    [
+      "A","Q","King","Wolf","Q","Wolf","J","K","A","Q","Wolf","A","Wolf","Q","A",
+      "Queen","Scatter","Q","J","K","Queen","A","Q","K","A","J","Queen","K","J","J",
+      "K","Scatter","J","Q","King","A","King","K","A","A","J","Queen","Q","Wolf",
+      "K","K","Q","King","J","J"
+    ],
+    [
+      "Queen","J","Q","A","Queen","K","Scatter","A","Wild","Wolf","K","A","J","K",
+      "Queen","J","King","A","Q","Wolf","K","Q","J","A","K","Queen","J","A","Q","K",
+      "Wild","Wolf","K","Q","Wild","K","J","Q","Wolf","J","K","A","Q","J","Wolf",
+      "King","J","Q","A","King"
+    ],
+    [
+      "King","J","Queen","Q","Wolf","J","Queen","Q","Wolf","K","K","Scatter","Q",
+      "K","J","K","A","Wolf","Q","J","Wild","King","A","Wolf","Queen","Q","J","K",
+      "A","Queen","J","A","King","Q","A","Q","K","Q","Queen","J","Q","K","A","Wolf",
+      "Wild","K","A","J","A","J"
+    ],
+    [
+      "J","K","A","Q","Wild","K","J","Queen","Q","A","K","K","Q","J","K","A",
+      "King","Wolf","Queen","Q","A","J","K","J","A","Q","J","King","J","K","A",
+      "Q","J","Queen","K","Wild","A","J","Q","Scatter","Q","Wolf","King","Q",
+      "J","A","Wolf","Queen","A","Wolf"
+    ],
+    [
+      "A","K","J","A","Q","Scatter","K","J","K","King","Wolf","Queen","A","A","K",
+      "J","K","Wolf","Q","Q","A","Q","J","K","J","A","Wolf","Q","A","Wild","Q",
+      "J","A","King","K","Q","J","K","Wolf","Wild","Queen","Q","J","A","King",
+      "Q","Wolf","Queen","J","Queen"
+    ]
+  ]
+}

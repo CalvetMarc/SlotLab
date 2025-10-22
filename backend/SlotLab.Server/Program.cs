@@ -40,7 +40,7 @@ builder.Services.AddControllers();
 
 // 🔹 SignalR i GameManager
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<GameManager>(_ => new GameManager("slotConfig.json"));
+//builder.Services.AddSingleton<GameManager>(_ => new GameManager("slotConfig.json"));
 
 var app = builder.Build();
 

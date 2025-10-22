@@ -5,6 +5,7 @@ namespace SlotLab.Server.Hubs;
 
 public class GameHub : Hub
 {
+    /*
     private readonly GameManager _gameManager;
 
     public GameHub(GameManager gameManager)
@@ -17,4 +18,5 @@ public class GameHub : Hub
         var result = _gameManager.Spin();
         await Clients.Caller.SendAsync("SpinResult", result);
     }
+    */
 }
