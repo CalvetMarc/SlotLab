@@ -22,36 +22,43 @@ namespace SlotLab.Engine.Core
 
         public SpinResult Spin()
         {
-            var reelsResult = new List<object>();
+            var preRoll = new List<object>();
+            var visibleWindow = new List<object>();
+            var postRoll = new List<object>();
 
-            for (int reelIndex = 0; reelIndex < strips.Length; reelIndex++)
+            for (int reelIndex = 0; reelIndex < columns; reelIndex++)
             {
-                var strip = strips[reelIndex];
+                var reel = strips[reelIndex];
+                int stopIndex = Rng.NextIntBetween(0, reel.Length - 1);
 
-                int stopIndex = Rng.NextIntBetween(0, strip.Length - 1);
+                int preCount = 2;
+                var pre = new List<string>();
+                for (int i = preCount; i > 0; i--)
+                    pre.Add(GetSymbol(reel, stopIndex - i));
+                
+                var visible = new List<string>();
+                for (int i = 0; i < rows; i++)
+                    visible.Add(GetSymbol(reel, stopIndex + i));
 
-                var visibleWindow = new[]
-                {
-                    GetSymbol(strip, stopIndex - 1),
-                    GetSymbol(strip, stopIndex),
-                    GetSymbol(strip, stopIndex + 1)
-                };
+                int postCount = 2;
+                var post = new List<string>();
+                for (int i = 0; i < postCount; i++)
+                    post.Add(GetSymbol(reel, stopIndex + columns + i));
 
-                reelsResult.Add(new
-                {
-                    visibleWindow
-                });
+                preRoll.Add(pre);
+                visibleWindow.Add(visible);
+                postRoll.Add(post);
             }
 
             return new SpinResult
             {
-                Game = gameId,
-                Rows = rows,
-                Columns = columns,
-                Reels = reelsResult,
-                WinAmount = 0.0,
-                Timestamp = DateTime.UtcNow
+                PreRoll = preRoll,
+                VisibleWindow = visibleWindow,
+                PostRoll = postRoll,
+                WinAmount = 0.0
             };
         }
+
+
     }
 }

@@ -1,5 +1,6 @@
 export interface SpinResult {
-  reels: number[];
-  totalWin: number;
-  timestamp: string;
+  preRoll: number[][];
+  visibleWindow: number[][];
+  postRoll: number[][];
+  winAmount: number;
 }
