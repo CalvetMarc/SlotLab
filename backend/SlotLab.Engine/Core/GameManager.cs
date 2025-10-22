@@ -4,7 +4,7 @@ namespace SlotLab.Engine.Core
 {
     public class GameManager
     {
-        private readonly BaseGame baseGame;
+        //private readonly BaseGame baseGame;
 
         public GameManager(string configPath)
         {
@@ -36,7 +36,7 @@ namespace SlotLab.Engine.Core
                 paytable[symbolEntry.Key] = payouts;
             }
 
-            baseGame = new BaseGame(gameId, rows, columns, strips, paylines, paytable);
+            //baseGame = new BaseGame(gameId, rows, columns, strips, paylines, paytable);
 
             Console.WriteLine($"✅ Configuració carregada: {gameId} ({columns}x{rows})");
             Console.WriteLine($"🎲 RNG PCG inicialitzat i llest per generar spins");
@@ -45,7 +45,8 @@ namespace SlotLab.Engine.Core
         public object Spin()
         {
             // 🔹 Quan fem un spin, el BaseGame usarà el RNG natiu via Rng.Next()
-            return baseGame.Spin();
+            //return baseGame.Spin();
+            return null;
         }
     }
 }
