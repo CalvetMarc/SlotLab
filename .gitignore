@@ -1,0 +1,39 @@
+# === BACKEND (.NET / C#) ===
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+*.vscode/
+.vscode/
+
+# Build / publish
+publish/
+dist/
+*.db
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+
+# === FRONTEND (Node / Vite / TypeScript) ===
+node_modules/
+dist/
+.vite/
+*.log
+*.lock
+.DS_Store
+
+# === SIMULATOR (futur) ===
+simulator/node_modules/
+simulator/dist/
+
+# === System / Misc ===
+Thumbs.db
+*.tmp
+*.swp
+
+# === personal files / locals ===
+commands.txt
