@@ -1,5 +1,4 @@
 using System.Text.Json.Nodes;
-using SlotLab.Engine.Core;
 
 namespace SlotLab.Engine.Core
 {
@@ -9,6 +8,9 @@ namespace SlotLab.Engine.Core
 
         public GameManager(string configPath)
         {
+            Rng.Initialize(); 
+
+            // 🔹 Carreguem configuració del joc
             var configJson = File.ReadAllText(configPath);
             var jsonNode = JsonNode.Parse(configJson)!;
 
@@ -20,15 +22,17 @@ namespace SlotLab.Engine.Core
                 .Select(reel => reel!.AsArray().Select(symbol => symbol!.ToString()).ToArray())
                 .ToArray();
 
+            // 🔹 Creem el joc base
             baseGame = new BaseGame(gameId, rows, columns, strips);
 
             Console.WriteLine($"✅ Configuració carregada: {gameId} ({columns}x{rows})");
+            Console.WriteLine($"🎲 RNG PCG inicialitzat i llest per generar spins");
         }
 
         public object Spin()
         {
+            // 🔹 Quan fem un spin, el BaseGame usarà el RNG natiu via Rng.Next()
             return baseGame.Spin();
         }
     }
-    
 }

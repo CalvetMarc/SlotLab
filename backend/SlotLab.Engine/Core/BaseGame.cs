@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using SlotLab.Engine.Models;
 
 namespace SlotLab.Engine.Core
@@ -10,7 +8,6 @@ namespace SlotLab.Engine.Core
         private readonly int rows;
         private readonly int columns;
         private readonly string[][] strips;
-        private readonly Random rng;
 
         public BaseGame(string gameId, int rows, int columns, string[][] strips)
         {
@@ -18,14 +15,11 @@ namespace SlotLab.Engine.Core
             this.rows = rows;
             this.columns = columns;
             this.strips = strips;
-            this.rng = new Random();
         }
 
-        // 🔹 Funció auxiliar: accés circular a símbols
         private string GetSymbol(string[] strip, int index)
             => strip[(index + strip.Length) % strip.Length];
 
-        // 🔹 Genera una tirada (spin) i retorna un SpinResult
         public SpinResult Spin()
         {
             var reelsResult = new List<object>();
@@ -33,7 +27,8 @@ namespace SlotLab.Engine.Core
             for (int reelIndex = 0; reelIndex < strips.Length; reelIndex++)
             {
                 var strip = strips[reelIndex];
-                int stopIndex = rng.Next(strip.Length);
+
+                int stopIndex = Rng.NextIntBetween(0, strip.Length - 1);
 
                 var visibleWindow = new[]
                 {
@@ -42,27 +37,12 @@ namespace SlotLab.Engine.Core
                     GetSymbol(strip, stopIndex + 1)
                 };
 
-                var preRoll = new[]
-                {
-                    GetSymbol(strip, stopIndex - 3),
-                    GetSymbol(strip, stopIndex - 2)
-                };
-
-                var postRoll = new[]
-                {
-                    GetSymbol(strip, stopIndex + 2),
-                    GetSymbol(strip, stopIndex + 3)
-                };
-
                 reelsResult.Add(new
                 {
-                    visibleWindow,
-                    preRoll,
-                    postRoll
+                    visibleWindow
                 });
             }
 
-            // Retornem un objecte SpinResult tipat
             return new SpinResult
             {
                 Game = gameId,

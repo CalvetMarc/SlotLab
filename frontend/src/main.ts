@@ -5,9 +5,10 @@ import { SpinResult } from "./types/SpinResult";
 
 // --- Crear app Pixi ---
 const app = new Application({
-  background: "#1e1e1e",
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,  // 🔹 Fa que ocupi tota la finestra i es redimensioni automàticament
+  background: "#000000",
+  antialias: true,
 });
 await app.init();
 
@@ -76,3 +77,7 @@ spinButton.on("pointerdown", async () => {
     panel.setMessage("❌ Error enviant spin: " + err);
   }
 });
+window.addEventListener("resize", () => {
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+});
+
