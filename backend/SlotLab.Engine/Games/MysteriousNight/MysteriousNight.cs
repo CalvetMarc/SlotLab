@@ -9,38 +9,57 @@ namespace SlotLab.Engine.Games
     {
         public readonly GameBase gameBase;
 
-        public MysteriousNight(string configPath)
+        public MysteriousNight(JsonNode jsonNode)
         {
             Rng.Initialize();
 
-            var configJson = File.ReadAllText(configPath);
-            var jsonNode = JsonNode.Parse(configJson)!;
+            var gridNode = jsonNode["grid"]?.AsArray()?.FirstOrDefault();
+            int rows = gridNode?["Rows"]?.GetValue<int>() ?? 0;
+            int columns = gridNode?["Columns"]?.GetValue<int>() ?? 0;
 
-            string gameId = jsonNode["gameId"]!.ToString();
-            int rows = jsonNode["rows"]!.GetValue<int>();
-            int columns = jsonNode["columns"]!.GetValue<int>();
-
-            List<List<string>> strips = jsonNode["strips"]!.AsArray().Select(reel => reel!.AsArray().Select(symbol => symbol!.ToString()).ToList()).ToList();
-            var paylines = jsonNode["paylines"]!.AsArray().Select(line => line!.AsArray().Select(n => n!.GetValue<int>()).ToArray()).ToList();
-
-            var paytable = new Dictionary<string, Dictionary<int, double>>();
-            var paytableNode = jsonNode["paytable"]!.AsObject();
-
-            foreach (var symbolEntry in paytableNode)
+            var stripsNode = jsonNode["strips"]?.AsObject();
+            List<List<string>> strips = new();
+            if (stripsNode != null)
             {
-                var payouts = new Dictionary<int, double>();
-                foreach (var kv in symbolEntry.Value!.AsObject())
+                foreach (var strip in stripsNode.OrderBy(kv => kv.Key))
                 {
-                    // Ex: key = "x3" → count = 3
-                    int count = int.Parse(kv.Key.TrimStart('x'));
-                    double value = kv.Value!.GetValue<double>();
-                    payouts[count] = value;
+                    var values = strip.Value!.AsArray().Select(v => v!.ToString()).ToList();
+                    strips.Add(values);
                 }
-                paytable[symbolEntry.Key] = payouts;
             }
 
-            gameBase = new GameBase(new ReelsSymbolsProvider_Default(strips, rows), new LineBasedEvaluator_Default(paylines, paytable));
-        }
+            var paylinesNode = jsonNode["paylines"]?.AsArray();
+            List<int[]> paylines = new();
+            if (paylinesNode != null)
+            {
+                foreach (var lineNode in paylinesNode)
+                {
+                    var line = lineNode!.AsObject()
+                        .OrderBy(kv => kv.Key) // Ordenem "Reel 1", "Reel 2", etc.
+                        .Select(kv => kv.Value!.GetValue<int>())
+                        .ToArray();
+                    paylines.Add(line);
+                }
+            }
 
+            var paytableNode = jsonNode["paytable"]?.AsArray();
+            var paytable = new Dictionary<string, Dictionary<int, double>>();
+            if (paytableNode != null)
+            {
+                foreach (var symbol in paytableNode)
+                {
+                    string symbolName = symbol!["Symbol"]!.GetValue<string>();
+                    var payouts = new Dictionary<int, double>
+                    {
+                        [3] = symbol!["Pay 3"]?.GetValue<double>() ?? 0.0,
+                        [4] = symbol!["Pay4"]?.GetValue<double>() ?? 0.0,
+                        [5] = symbol!["Pay5"]?.GetValue<double>() ?? 0.0
+                    };
+                    paytable[symbolName] = payouts;
+                }
+            }
+
+            gameBase = new GameBase( new ReelsSymbolsProvider_Default(strips, rows), new LineBasedEvaluator_Default(paylines, paytable));
+        }
     }
 }

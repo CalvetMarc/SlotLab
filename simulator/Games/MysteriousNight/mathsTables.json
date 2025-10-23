@@ -1,0 +1,36 @@
+{
+  "base_data": [
+    {
+      "name": "Grid",
+      "orientation": "records"
+    },
+    {
+      "name": "Strips",
+      "orientation": "list"
+    },
+    {
+      "name": "Paylines",
+      "orientation": "records"
+    },
+    {
+      "name": "Paytable",
+      "orientation": "records"
+    }
+  ],
+  "bonus_data": [
+    {
+      "name": "Bonus_Spawner_Probabilites",
+      "orientation": "records",
+      "multiply_values_by": 100
+    },
+    {
+      "name": "Card_Multiplier_Spawner",
+      "orientation": "records",
+      "ignore_columns": ["Weight", "Probability"]
+    },
+    {
+      "name": "Levels",
+      "orientation": "records"
+    }
+  ]
+}

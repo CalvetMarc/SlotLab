@@ -1,0 +1,16 @@
+{
+  "simulation": {
+    "game_name": "MysteriousNight", 
+    "rebuild_engine": false,
+    "config_mode": "test",         
+    "overwrite_stable_after_test": false,
+    "total_spins": 2000000,
+    "bet": 1.0
+  }, 
+  "_notes": {
+    "game_name": "Name of the game to simulate (must match the folder class in SlotLab.Engine.Games).",
+    "rebuild_engine": "If true, run 'dotnet build' before simulation to refresh the DLL.",
+    "config_mode": "'stable' = use engine json game config, 'test' = use simulator excel tables as config.",
+    "overwrite_stable_after_test": "If true, after the simulation the stable version will be overwritted by the config used"    
+  }
+}

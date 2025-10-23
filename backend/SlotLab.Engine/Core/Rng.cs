@@ -5,10 +5,9 @@ namespace SlotLab.Engine.Core
 {
     public static class Rng
     {
-        // 🔹 Nom exacte del teu fitxer natiu (ja tens build final)
         private const string LIB_NAME = "libpcg_rng.so";
 
-        // --- Signatures natives (C) ---
+        // --- Native (C++) signatures ---
 
         // Seeding / state
         [DllImport(LIB_NAME, EntryPoint = "set_seed", CallingConvention = CallingConvention.Cdecl)]
@@ -44,7 +43,7 @@ namespace SlotLab.Engine.Core
         private static extern bool pcg_bool();
 
 
-        // --- Capa C# “friendly” ---
+        // --- Layer C# “friendly” ---
 
         private static bool _initialized = false;
 
@@ -56,7 +55,7 @@ namespace SlotLab.Engine.Core
             set_seed(actualSeed);
             _initialized = true;
 
-            Console.WriteLine($"🎲 PCG RNG inicialitzat (seed = {actualSeed})");
+            Console.WriteLine($"🎲 PCG RNG initialized (seed = {actualSeed})");
         }
 
         public static void Reset(ulong seed)
