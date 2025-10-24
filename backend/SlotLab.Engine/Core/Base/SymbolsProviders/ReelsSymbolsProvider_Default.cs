@@ -8,8 +8,6 @@ namespace SlotLab.Engine.Core
         private readonly int preCount;
         private readonly int postCount;
         private readonly List<List<string>> gameStrips;
-        protected ISymbolsProvider Super => ((ISymbolsProvider)this);
-
 
         public ReelsSymbolsProvider_Default(List<List<string>> gameStrips, int visibleRows, int preCount = 2, int postCount = 2)
         {
@@ -32,17 +30,17 @@ namespace SlotLab.Engine.Core
                 // --- PreRoll ---
                 var pre = new List<string>();
                 for (int i = preCount; i > 0; i--)
-                    pre.Add(Super.GetSymbolCircular(reel, stopIndex - i));
+                    pre.Add(GetSymbolCircular(reel, stopIndex - i));
 
                 // --- Visible ---
                 var visible = new List<string>();
                 for (int i = 0; i < visibleRows; i++)
-                    visible.Add(Super.GetSymbolCircular(reel, stopIndex + i));
+                    visible.Add(GetSymbolCircular(reel, stopIndex + i));
 
                 // --- PostRoll ---
                 var post = new List<string>();
                 for (int i = 0; i < postCount; i++)
-                    post.Add(Super.GetSymbolCircular(reel, stopIndex + visibleRows + i));
+                    post.Add(GetSymbolCircular(reel, stopIndex + visibleRows + i));
 
                 preRoll.Add(pre);
                 visibleWindow.Add(visible);
@@ -58,6 +56,21 @@ namespace SlotLab.Engine.Core
                     ["PostRoll"] = postRoll
                 }
             };
+        }
+
+        /// <summary>
+        /// Safely gets a symbol from a reel using circular (wrap-around) indexing.
+        /// </summary>
+        /// <param name="reel">The reel (strip) to read from.</param>
+        /// <param name="index">The target index, can be negative or exceed reel length.</param>
+        /// <returns>The symbol at the wrapped position.</returns>
+        string GetSymbolCircular(List<string> reel, int index)
+        {
+            if (reel == null || reel.Count == 0)
+                throw new ArgumentException("Reel cannot be null or empty", nameof(reel));
+
+            int normalizedIndex = ((index % reel.Count) + reel.Count) % reel.Count;
+            return reel[normalizedIndex];
         }
     }
 }

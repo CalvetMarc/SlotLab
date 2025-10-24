@@ -506,19 +506,19 @@
   "levels": [
     {
       "Level": 1,
-      "Scatters": 3,
+      "Scatter": 3,
       "Start Free Spins": 10,
       "Bonus to upgrade": 3
     },
     {
       "Level": 2,
-      "Scatters": 4,
+      "Scatter": 4,
       "Start Free Spins": 20,
       "Bonus to upgrade": 3
     },
     {
       "Level": 3,
-      "Scatters": 5,
+      "Scatter": 5,
       "Start Free Spins": 30,
       "Bonus to upgrade": 0
     }

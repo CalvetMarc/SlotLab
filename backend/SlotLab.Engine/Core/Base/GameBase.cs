@@ -13,7 +13,7 @@ namespace SlotLab.Engine.Core.Base
             this.evaluator = evaluator;
         }
 
-        public virtual PlayResultData Play(double bet = 1.0)
+        public virtual PlayResultData Play(double bet)
         {
             var spinData = symbolsProvider.Spin();
             double totalWin = evaluator.Evaluate(spinData.VisibleWindow, bet);
