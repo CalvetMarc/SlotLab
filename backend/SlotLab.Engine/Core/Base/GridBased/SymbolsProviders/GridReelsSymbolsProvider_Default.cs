@@ -1,15 +1,15 @@
+using System.Text.Json.Nodes;
 using SlotLab.Engine.Models;
 
 namespace SlotLab.Engine.Core
 {
-    public class ReelsSymbolsProvider_Default : ISymbolsProvider
+    public class GridReelsSymbolsProvider_Default : ISymbolsProvider
     {
-        private readonly int visibleRows;
-        private readonly int preCount;
-        private readonly int postCount;
+        private readonly int preCount, postCount;
         private readonly List<List<string>> gameStrips;
+        private readonly int visibleRows;
 
-        public ReelsSymbolsProvider_Default(List<List<string>> gameStrips, int visibleRows, int preCount = 2, int postCount = 2)
+        public GridReelsSymbolsProvider_Default(List<List<string>> gameStrips, int visibleRows, int preCount = 2, int postCount = 2)
         {
             this.visibleRows = visibleRows;
             this.preCount = preCount;
@@ -58,12 +58,6 @@ namespace SlotLab.Engine.Core
             };
         }
 
-        /// <summary>
-        /// Safely gets a symbol from a reel using circular (wrap-around) indexing.
-        /// </summary>
-        /// <param name="reel">The reel (strip) to read from.</param>
-        /// <param name="index">The target index, can be negative or exceed reel length.</param>
-        /// <returns>The symbol at the wrapped position.</returns>
         string GetSymbolCircular(List<string> reel, int index)
         {
             if (reel == null || reel.Count == 0)
@@ -71,6 +65,7 @@ namespace SlotLab.Engine.Core
 
             int normalizedIndex = ((index % reel.Count) + reel.Count) % reel.Count;
             return reel[normalizedIndex];
-        }
+        }        
+        
     }
 }

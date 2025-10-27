@@ -1,0 +1,49 @@
+using SlotLab.Engine.Models;
+using System.Collections.Generic;
+
+namespace SlotLab.Engine.Core
+{
+    /// <summary>
+    /// Calculates the total payout for line-based evaluation results.
+    /// </summary>
+    public class LineBasedPayoutCalculator_Default : IGridPayoutCalculator<GridEvaluatorLineBasedOutputRulesData>
+    {
+        private readonly Dictionary<string, Dictionary<int, double>> paytable;
+
+        /// <summary>
+        /// Creates a payout calculator for line-based evaluations.
+        /// </summary>
+        /// <param name="paytable">Dictionary of symbol → (matchCount → multiplier).</param>
+        public LineBasedPayoutCalculator_Default(Dictionary<string, Dictionary<int, double>> paytable)
+        {
+            this.paytable = paytable;
+        }
+
+        /// <summary>
+        /// Calculates the total win based on the bet and line evaluation results.
+        /// </summary>
+        /// <param name="bet">The bet per spin.</param>
+        /// <param name="evaluationData">The evaluation result containing all winning lines.</param>
+        /// <returns>Total win amount.</returns>
+        public double Calculate(double bet, GridEvaluatorLineBasedOutputRulesData evaluationData)
+        {
+            double totalWin = 0.0;
+
+            foreach (var (lineNumber, symbol, count) in evaluationData.linesInfo)
+            {
+                // Validem entrades bàsiques
+                if (string.IsNullOrEmpty(symbol) || count < 3)
+                    continue;
+
+                // Comprovem que el símbol existeixi a la taula de pagament
+                if (paytable.TryGetValue(symbol, out var payoutsByCount) &&
+                    payoutsByCount.TryGetValue(count, out var multiplier))
+                {
+                    totalWin += multiplier * bet;
+                }
+            }
+
+            return totalWin;
+        }
+    }
+}

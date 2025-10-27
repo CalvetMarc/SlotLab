@@ -7,9 +7,9 @@ namespace SlotLab.Engine.Games
 {
     public class MysteriousNight
     {
-        private PlayResultData lastBaseResult;
-        private readonly GameBase gameBase;
-        private readonly GameBonus gameBonus;
+        private readonly GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData> gameBase;
+
+        //private readonly GridBasedGameMechanic_Default gameBonus;
 
         List<(int Level, int Scatters, int StartFreeSpins, int BonusToUpgrade)> levels;
 
@@ -18,6 +18,7 @@ namespace SlotLab.Engine.Games
         {
             Rng.Initialize();
             gameBase = CreateGameBase(jsonNode) ?? throw new InvalidOperationException("Failed to create GameBase");
+            //gameBonus = CreateGameBonus(jsonNode) ?? throw new InvalidOperationException("Failed to create GameBase");
         }
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace SlotLab.Engine.Games
         /// </summary>
         /// <param name="jsonNode">The JSON node containing the game configuration.</param>
         /// <returns>A fully configured GameBase instance.</returns>
-        private static GameBase? CreateGameBase(JsonNode jsonNode)
+        private static GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData> CreateGameBase(JsonNode jsonNode)
         {
             var baseNode = jsonNode;
             if (baseNode == null)
@@ -86,17 +87,23 @@ namespace SlotLab.Engine.Games
             }
 
             // --- CREATE GAME BASE ---
-            return new GameBase(
-                new ReelsSymbolsProvider_Default(strips, rows),
-                new LineBasedEvaluator_Default(paylines, paytable)
+            return new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
+                new GridReelsSymbolsProvider_Default(strips, rows),
+                new LineBasedEvaluator_Default(paylines, paytable),
+                new LineBasedPayoutCalculator_Default(paytable)
             );
         }
 
-        private static GameBonus? CreateGameBonus(JsonNode jsonNode)
+        
+        /*private static GridBasedGameMechanic_Default? CreateGameBonus(JsonNode jsonNode)
         {
             var baseNode = jsonNode;
             if (baseNode == null)
                 throw new InvalidOperationException("Missing 'base' section in JSON configuration.");
+
+            var gridNode = baseNode["grid"]?.AsArray()?.FirstOrDefault();
+            int rows = gridNode?["Rows"]?.GetValue<int>() ?? 0;
+            int columns = gridNode?["Columns"]?.GetValue<int>() ?? 0;
 
             // --- BONUS_SPAWNER_PROBABILITIES ---
             var bonusSpawnerProbabilitiesNode = baseNode["bonus_spawner_probabilites"]?.AsArray();
@@ -118,14 +125,17 @@ namespace SlotLab.Engine.Games
 
             // --- CARD_MULTIPLIER_SPAWNER ---
             var cardMultiplierSpawnerNode = baseNode["card_multiplier_spawner"]?.AsArray();
-            List<(int multiplier, double probability)> cardMultiplierSpawner = new();
+            Dictionary<string, double> cardMultiplierSpawner = new();
+
             if (cardMultiplierSpawnerNode != null)
             {
                 foreach (var entry in cardMultiplierSpawnerNode)
                 {
                     int multiplier = entry!["Card Multiplier"]?.GetValue<int>() ?? 0;
                     double probability = entry!["Probaility %"]?.GetValue<double>() ?? 0.0;
-                    cardMultiplierSpawner.Add((multiplier, probability));
+
+                    string key = $"Card Multiplier {multiplier}";
+                    cardMultiplierSpawner[key] = probability;
                 }
             }
 
@@ -145,21 +155,24 @@ namespace SlotLab.Engine.Games
                 }
             }
 
-            // --- CREATE GAME BASE ---
-            //return new GameBonus(new ScatterBonusTrigger_Default(levels.First().Scatters), null, null);ç
-            return null;
-        }
+            List<KeyValuePair<string, Dictionary<string, double>>> allSpawnerTable;
+
+            return new GridBasedGameMechanic_Default(
+                new SpawnSymbolsProvider_Default(columns, rows, [new("", bonusSpawnerProbabilities), new("Card Front", cardMultiplierSpawner)]),
+                new LineBasedEvaluatorPayer_Default(paylines, paytable)
+            );
+        }*/
 
 
-        public PlayResultData PlayBase(double bet = 1.0) 
+        /*public GameMechanicData PlayBase(double bet = 1.0) 
         {
-            lastBaseResult = gameBase.Play(bet);
+            lastBaseResult = gameBase.Tick(bet);
             return lastBaseResult;
-        }
+        }*/
 
         public bool CanPlayBonus()
         {
-            (bool, Dictionary<string, object>?) bonusStartData = gameBonus.CanBonusStart(new Dictionary<string, object> { { "GameReels", lastBaseResult.SpinResultData.VisibleWindow } });
+            (bool, Dictionary<string, object>?) bonusStartData = gameBonus.CanBonusStart(new Dictionary<string, object> { { "GameReels", ((GridBasedGameMechanicData)lastBaseResult).SpinResultData.VisibleWindow } });
 
             if (bonusStartData.Item1)
             {

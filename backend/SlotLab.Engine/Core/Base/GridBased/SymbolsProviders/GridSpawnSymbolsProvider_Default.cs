@@ -2,14 +2,23 @@ using SlotLab.Engine.Models;
 
 namespace SlotLab.Engine.Core
 {
-    public class SpawnSymbolsProvider_Default : ISymbolsProvider
+    public class GridSpawnSymbolsProvider_Default : IGridSymbolsProvider
     {
         private readonly List<List<string>> gameReels;
         private readonly List<KeyValuePair<string, Dictionary<string, double>>> spawnerTable;
 
-        public SpawnSymbolsProvider_Default(List<List<string>> gameReels, List<KeyValuePair<string, Dictionary<string, double>>> spawnerTable)
+        public GridSpawnSymbolsProvider_Default(int columns, int rows, List<KeyValuePair<string, Dictionary<string, double>>> spawnerTable)
         {
-            this.gameReels = gameReels;
+            gameReels = new List<List<string>>();
+            for (int i = 0; i < columns; i++)
+            {
+                var reel = new List<string>();
+                for (int j = 0; j < rows; j++)
+                    reel.Add(string.Empty);
+
+                gameReels.Add(reel);
+            }
+            
             this.spawnerTable = spawnerTable;
         }
 
