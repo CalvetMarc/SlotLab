@@ -8,15 +8,15 @@ namespace SlotLab.Engine.Core
     /// </summary>
     public class LineBasedPayoutCalculator_Default : IGridPayoutCalculator<GridEvaluatorLineBasedOutputRulesData>
     {
-        private readonly Dictionary<string, Dictionary<int, double>> paytable;
+        private readonly Data_LineBasedPayoutCalculator lineBasedPayoutCalculatorData;
 
         /// <summary>
         /// Creates a payout calculator for line-based evaluations.
         /// </summary>
         /// <param name="paytable">Dictionary of symbol → (matchCount → multiplier).</param>
-        public LineBasedPayoutCalculator_Default(Dictionary<string, Dictionary<int, double>> paytable)
+        public LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator lineBasedPayoutCalculatorData)
         {
-            this.paytable = paytable;
+            this.lineBasedPayoutCalculatorData = lineBasedPayoutCalculatorData;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace SlotLab.Engine.Core
                     continue;
 
                 // Comprovem que el símbol existeixi a la taula de pagament
-                if (paytable.TryGetValue(symbol, out var payoutsByCount) &&
+                if (lineBasedPayoutCalculatorData.Paytable.TryGetValue(symbol, out var payoutsByCount) &&
                     payoutsByCount.TryGetValue(count, out var multiplier))
                 {
                     totalWin += multiplier * bet;

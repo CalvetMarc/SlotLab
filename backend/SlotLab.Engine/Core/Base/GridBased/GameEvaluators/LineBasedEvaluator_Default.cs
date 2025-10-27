@@ -5,46 +5,50 @@ using System.Linq;
 namespace SlotLab.Engine.Core
 {
     /// <summary>
-    /// Evaluates paylines and produces structured information about winning lines.
-    /// (Does NOT calculate payouts — that’s handled separately.)
+    /// Evaluates paylines and detects winning symbol combinations.
+    /// NOTE: This class does NOT calculate payouts — only identifies winning lines.
     /// </summary>
     public class LineBasedEvaluator_Default : IGridEvaluator<GridEvaluatorLineBasedOutputRulesData>
     {
-        protected readonly List<int[]> paylines;
-        protected readonly Dictionary<string, Dictionary<int, double>> paytable;
+        // Configuration data (contains paylines only)
+        protected readonly Data_LineBasedEvaluator lineBasedEvaluatorData;
 
-        public LineBasedEvaluator_Default(
-            List<int[]> paylines,
-            Dictionary<string, Dictionary<int, double>> paytable)
+        public LineBasedEvaluator_Default(Data_LineBasedEvaluator lineBasedEvaluatorData)
         {
-            this.paylines = paylines;
-            this.paytable = paytable;
+            this.lineBasedEvaluatorData = lineBasedEvaluatorData;
         }
 
+        /// <summary>
+        /// Evaluates visible symbols on the reels and returns all winning lines.
+        /// </summary>
+        /// <param name="visibleWindow">
+        /// A 2D list of visible symbols [column][row] representing the reel window.
+        /// </param>
+        /// <returns>Structured information about all detected winning lines.</returns>
         public GridEvaluatorLineBasedOutputRulesData Evaluate(List<List<string>> visibleWindow)
         {
-            // Aquesta llista guardarà les línies guanyadores
+            // Stores all found winning lines (line number, base symbol, match count)
             var winningLines = new List<(int lineNumber, string symbol, int lineSymbolsCount)>();
 
-            // Recorrem totes les línies configurades
-            for (int lineIndex = 0; lineIndex < paylines.Count; lineIndex++)
+            // Iterate through every configured payline
+            for (int lineIndex = 0; lineIndex < lineBasedEvaluatorData.Paylines.Count; lineIndex++)
             {
-                var line = paylines[lineIndex];
+                var line = lineBasedEvaluatorData.Paylines[lineIndex];
                 var symbols = new List<string>();
 
-                // Obtenim els símbols visibles d’aquesta línia
+                // Collect the visible symbols along this payline
                 for (int col = 0; col < visibleWindow.Count; col++)
                 {
-                    int row = line[col];
-                    symbols.Add(visibleWindow[col][row]);
+                    int row = line[col];                // Row index for this reel according to the line definition
+                    symbols.Add(visibleWindow[col][row]); // Symbol at [column][row]
                 }
 
-                // Troba el primer símbol “base” (que no sigui Wild ni Scatter)
+                // Find the first "base" symbol (skip Wilds and Scatters)
                 string? firstSymbol = symbols.FirstOrDefault(s => s != "Wild" && s != "Scatter");
-                if (string.IsNullOrEmpty(firstSymbol) || !paytable.ContainsKey(firstSymbol))
-                    continue;
+                if (string.IsNullOrEmpty(firstSymbol))
+                    continue; // No valid base symbol found, skip this line
 
-                // Comptem quants símbols consecutius (iguals o Wilds) hi ha des de l’esquerra
+                // Count how many consecutive symbols (from the left) match the base symbol or are Wilds
                 int count = 0;
                 foreach (var sym in symbols)
                 {
@@ -54,14 +58,12 @@ namespace SlotLab.Engine.Core
                         break;
                 }
 
-                // Si la línia compleix el mínim de coincidències, la guardem
+                // Only consider it a winning line if at least 3 symbols match
                 if (count >= 3)
-                {
                     winningLines.Add((lineIndex, firstSymbol, count));
-                }
             }
 
-            // Retornem totes les línies guanyadores trobades
+            // Return all detected winning lines (no payout calculation)
             return new GridEvaluatorLineBasedOutputRulesData(winningLines);
         }
     }
