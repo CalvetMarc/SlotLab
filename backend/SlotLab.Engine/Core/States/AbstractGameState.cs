@@ -6,12 +6,14 @@ namespace SlotLab.Engine.Core
     /// Abstract base class implementing common behavior for all game states.
     /// </summary>
     public abstract class AbstractGameState : IGameState
-    {     
-        public bool IsFinished { get; protected set; }
-        public IGameState? NextState { get; protected set; }
+    {
+        protected readonly IGameStateMachine machine;
+        public AbstractGameState(IGameStateMachine machine)
+        {
+            this.machine = machine;
+        }
 
-        public virtual void HandleEvent(AbstractEvent gameEvent){}
-
+        protected virtual void HandleEvent(AbstractEvent gameEvent){}
         /// <summary>
         /// Called when the state becomes active.
         /// Use this for initialization or UI setup.
@@ -27,15 +29,6 @@ namespace SlotLab.Engine.Core
         /// Executes one logic step in this state.
         /// Must be implemented by each specific state (BaseGame, Bonus, etc.).
         /// </summary>
-        public virtual void Tick(GameMechanicInputData input){}
-
-        /// <summary>
-        /// Helper for transitioning to another state.
-        /// </summary>
-        protected void TransitionTo(IGameState nextState)
-        {
-            IsFinished = true;
-            NextState = nextState;
-        }
+        public virtual void Tick(GameMechanicInputData input){}        
     }
 }

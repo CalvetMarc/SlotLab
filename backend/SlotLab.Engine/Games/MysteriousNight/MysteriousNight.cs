@@ -1,14 +1,45 @@
 using SlotLab.Engine.Core.Base;
 using SlotLab.Engine.Core;
-using System.Text.Json.Nodes;
 using SlotLab.Engine.Models;
 
 namespace SlotLab.Engine.Games
 {
-    public class MysteriousNight
+    /// <summary>
+    /// Game state machine for the "MysteriousNight" slot.
+    /// Declares the flow with a route table: (State, Trigger) -> Next State factory.
+    /// </summary>
+    public sealed class MysteriousNight : AbstractGameStateMachine
     {
-        private readonly GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData> gameBase;
+        public MysteriousNight()
+        {
+            // From Idle → Spin
+            Map<IdleState>(Trigger.SpinRequested,     (m, p) => new SpinState(m, (decimal)p!));
+            Map<IdleState>(Trigger.AutoSpinRequested, (m, p) => new SpinState(m, (decimal)p!));
 
+            // From Spin → Result
+            // p = SpinResultEvent (o el tipus de resultat que facis servir)
+            //Map<SpinState>(Trigger.SpinFinished,      (m, p) => new ResultState(m, (SpinResultEvent)p!));
+            // From Result → Spin (si el jugador torna a spinar des del resultat)
+           // Map<ResultState>(Trigger.SpinRequested,   (m, p) => new SpinState(m, (decimal)p!));
+
+            // Exemple addicional si tens bonus:
+            // Map<ResultState>(Trigger.BonusEntered, (m, p) => new BonusState(m, (BonusData)p!));
+        }
+
+        /// <summary>
+        /// Helper per arrencar el joc en Idle.
+        /// </summary>
+        public void Start()
+        {
+            SetInitialState(new IdleState(this));
+        }
+    }
+}
+
+
+/*
+        private readonly GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData> gameBase;
+        
         public MysteriousNight(JsonNode jsonNode)
         {
             Rng.Initialize();
@@ -19,11 +50,20 @@ namespace SlotLab.Engine.Games
                 new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode))
             );
         }
-    }
-}
 
 
-/*
+
+
+
+
+
+
+
+
+
+
+
+
             var baseNode = jsonNode;
             if (baseNode == null)
                 throw new InvalidOperationException("Missing 'base' section in JSON configuration.");
