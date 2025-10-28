@@ -9,7 +9,7 @@ namespace SlotLab.Engine.Core
     public class SpinState : AbstractGameState
     {
         private readonly decimal _bet;
-        public SpinState(IGameStateMachine machine, decimal bet) : base(machine)
+        public SpinState(IGameStateMachine machine, GameEventBus gameEventBus, decimal bet) : base(machine, gameEventBus)
         {
             _bet = bet;
         }

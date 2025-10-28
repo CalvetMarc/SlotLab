@@ -13,8 +13,8 @@ namespace SlotLab.Engine.Games
         public MysteriousNight()
         {
             // From Idle → Spin
-            Map<IdleState>(Trigger.SpinRequested,     (m, p) => new SpinState(m, (decimal)p!));
-            Map<IdleState>(Trigger.AutoSpinRequested, (m, p) => new SpinState(m, (decimal)p!));
+            Map<IdleState>(Trigger.SpinRequested,     (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!));
+            Map<IdleState>(Trigger.AutoSpinRequested, (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!));
 
             // From Spin → Result
             // p = SpinResultEvent (o el tipus de resultat que facis servir)
@@ -31,7 +31,7 @@ namespace SlotLab.Engine.Games
         /// </summary>
         public void Start()
         {
-            SetInitialState(new IdleState(this));
+            SetInitialState(new IdleState(this, gameEventBus));
         }
     }
 }

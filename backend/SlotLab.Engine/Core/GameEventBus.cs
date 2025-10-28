@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace SlotLab.Engine.Core
 {
@@ -15,18 +15,18 @@ namespace SlotLab.Engine.Core
     /// 
     /// Optimized:
     /// - No DynamicInvoke (precompiled Action<AbstractEvent> dispatchers)
-    /// - Concurrent-safe via ReaderWriterLockSlim
+    /// - Lock-free using ConcurrentDictionary / ConcurrentBag
     /// - Constant-time invocation path
     /// </summary>
-    public static class GameEventBus
+    public class GameEventBus
     {
-        private static readonly Dictionary<Type, List<(Delegate raw, Action<AbstractEvent> compiled)>> handlersByType = new();
-        private static readonly ReaderWriterLockSlim rwLock = new(LockRecursionPolicy.SupportsRecursion);
+        private readonly ConcurrentDictionary<Type, ConcurrentBag<(Delegate raw, Action<AbstractEvent> compiled)>> _handlersByType
+            = new();
 
         // ------------------------------------------------------------------
         // SUBSCRIBE
         // ------------------------------------------------------------------
-        public static void Subscribe<T>(Action<T> handler)
+        public void Subscribe<T>(Action<T> handler)
         {
             if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
@@ -40,71 +40,50 @@ namespace SlotLab.Engine.Core
                     handler(typed);
             };
 
-            rwLock.EnterWriteLock();
-            try
-            {
-                if (!handlersByType.TryGetValue(eventType, out var list))
-                {
-                    list = new List<(Delegate, Action<AbstractEvent>)>();
-                    handlersByType[eventType] = list;
-                }
+            var bag = _handlersByType.GetOrAdd(eventType, _ => new ConcurrentBag<(Delegate, Action<AbstractEvent>)>());
 
-                // Avoid duplicates
-                if (list.Any(x => x.raw.Equals(handler)))
-                    return;
+            // Avoid duplicates manually (ConcurrentBag has no Remove or Contains)
+            if (bag.Any(x => x.raw.Equals(handler)))
+                return;
 
-                list.Add((handler, compiled));
-            }
-            finally
-            {
-                rwLock.ExitWriteLock();
-            }
+            bag.Add((handler, compiled));
         }
 
         // ------------------------------------------------------------------
         // PUBLISH
         // ------------------------------------------------------------------
-        public static void Publish<T>(T @event) where T : AbstractEvent
+        public void Publish<T>(T @event) where T : AbstractEvent
         {
             if (@event is null)
                 throw new ArgumentNullException(nameof(@event));
 
             var concreteType = @event.GetType();
 
-            rwLock.EnterReadLock();
-            try
-            {
-                // 1️⃣ Exact type
-                InvokeHandlers(concreteType, @event);
+            // 1️⃣ Exact type
+            InvokeHandlers(concreteType, @event);
 
-                // 2️⃣ Interfaces (e.g. IGameplayEvent, IBonusEvent)
-                foreach (var iface in concreteType.GetInterfaces())
-                    InvokeHandlers(iface, @event);
+            // 2️⃣ Interfaces (e.g. IGameplayEvent, IBonusEvent)
+            foreach (var iface in concreteType.GetInterfaces())
+                InvokeHandlers(iface, @event);
 
-                // 3️⃣ Base class chain (e.g. AbstractEvent)
-                var baseType = concreteType.BaseType;
-                while (baseType != null && baseType != typeof(object))
-                {
-                    InvokeHandlers(baseType, @event);
-                    baseType = baseType.BaseType;
-                }
-            }
-            finally
+            // 3️⃣ Base class chain (e.g. AbstractEvent)
+            var baseType = concreteType.BaseType;
+            while (baseType != null && baseType != typeof(object))
             {
-                rwLock.ExitReadLock();
+                InvokeHandlers(baseType, @event);
+                baseType = baseType.BaseType;
             }
         }
 
         // ------------------------------------------------------------------
         // INTERNAL INVOKER
         // ------------------------------------------------------------------
-        private static void InvokeHandlers(Type type, AbstractEvent evt)
+        private void InvokeHandlers(Type type, AbstractEvent evt)
         {
-            if (!handlersByType.TryGetValue(type, out var handlers))
+            if (!_handlersByType.TryGetValue(type, out var handlers))
                 return;
 
-            // Snapshot per evitar modificacions durant iteració
-            foreach (var (_, compiled) in handlers.ToList())
+            foreach (var (_, compiled) in handlers.ToArray()) // snapshot
             {
                 try
                 {
@@ -120,27 +99,27 @@ namespace SlotLab.Engine.Core
         // ------------------------------------------------------------------
         // UNSUBSCRIBE
         // ------------------------------------------------------------------
-        public static void Unsubscribe<T>(Action<T> handler)
+        public void Unsubscribe<T>(Action<T> handler)
         {
             if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
 
             var eventType = typeof(T);
 
-            rwLock.EnterWriteLock();
-            try
+            if (!_handlersByType.TryGetValue(eventType, out var bag))
+                return;
+
+            // Rebuild bag without the handler (ConcurrentBag doesn't support Remove)
+            var remaining = bag.Where(x => !x.raw.Equals(handler)).ToList();
+            if (remaining.Count == 0)
             {
-                if (handlersByType.TryGetValue(eventType, out var handlers))
-                {
-                    handlers.RemoveAll(x => x.raw.Equals(handler));
-                    if (handlers.Count == 0)
-                        handlersByType.Remove(eventType);
-                }
+                _handlersByType.TryRemove(eventType, out _);
+                return;
             }
-            finally
-            {
-                rwLock.ExitWriteLock();
-            }
+
+            // Replace with new bag
+            var newBag = new ConcurrentBag<(Delegate, Action<AbstractEvent>)>(remaining);
+            _handlersByType[eventType] = newBag;
         }
     }
 }

@@ -7,20 +7,21 @@ namespace SlotLab.Engine.Core
     public abstract class AbstractGameStateMachine : IGameStateMachine
     {
         public AbstractGameState CurrentState { get; private set; } = null!;
+        public readonly GameEventBus gameEventBus = new();
 
-        // (stateType, trigger) => (machine, payload) -> nextState
+        // (stateType, trigger) => (machine, metadata) -> nextState
         private readonly Dictionary<(Type, Trigger), Func<AbstractGameStateMachine, object?, AbstractGameState>> _routes = new();
 
         // Registrar rutes
         protected void Map<TState>(Trigger trigger, Func<AbstractGameStateMachine, object?, AbstractGameState> factory) where TState : AbstractGameState =>
          _routes[(typeof(TState), trigger)] = factory;
 
-        public void Fire(Trigger trigger, object? payload = null)
+        public void Fire(Trigger trigger, object? metadata = null)
         {
             var key = (CurrentState.GetType(), trigger);
             if (_routes.TryGetValue(key, out var factory))
             {
-                var next = factory(this, payload);
+                var next = factory(this, metadata);
                 ChangeState(next);
             }
             else
@@ -48,7 +49,7 @@ namespace SlotLab.Engine.Core
         {
             if (newState == null) throw new ArgumentNullException(nameof(newState));
             
-            CurrentState.OnExit();
+            CurrentState?.OnExit();
             CurrentState = newState;
             CurrentState.OnEnter();
         }

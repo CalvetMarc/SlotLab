@@ -10,20 +10,20 @@ namespace SlotLab.Engine.Core
     {
         private Action<IGameplayEvent>? _gameplayHandler;
 
-        public IdleState(IGameStateMachine machine) : base(machine) { }
+        public IdleState(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus) { }
 
         public override void OnEnter()
         {
             base.OnEnter();
 
             _gameplayHandler = e => HandleEvent((AbstractEvent)e);
-            GameEventBus.Subscribe(_gameplayHandler);
+            gameEventBus.Subscribe(_gameplayHandler);
         }
 
         public override void OnExit()
         {
             if (_gameplayHandler != null)
-                GameEventBus.Unsubscribe(_gameplayHandler);
+                gameEventBus.Unsubscribe(_gameplayHandler);
 
             base.OnExit();
         }

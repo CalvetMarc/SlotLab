@@ -8,9 +8,11 @@ namespace SlotLab.Engine.Core
     public abstract class AbstractGameState : IGameState
     {
         protected readonly IGameStateMachine machine;
-        public AbstractGameState(IGameStateMachine machine)
+        protected readonly GameEventBus gameEventBus;
+        public AbstractGameState(IGameStateMachine machine, GameEventBus gameEventBus)
         {
             this.machine = machine;
+            this.gameEventBus = gameEventBus;
         }
 
         protected virtual void HandleEvent(AbstractEvent gameEvent){}
