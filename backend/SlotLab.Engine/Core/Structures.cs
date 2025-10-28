@@ -5,6 +5,7 @@ namespace SlotLab.Engine.Core
         SpinRequested,
         AutoSpinRequested,
         SpinFinished,
-        BonusEntered
+        BonusEntered,
+        EvaluationDone
     }
 }

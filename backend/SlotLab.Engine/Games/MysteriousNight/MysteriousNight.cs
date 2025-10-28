@@ -10,20 +10,16 @@ namespace SlotLab.Engine.Games
     /// </summary>
     public sealed class MysteriousNight : AbstractGameStateMachine
     {
-        public MysteriousNight()
+        public MysteriousNight(ulong? seed = null) : base(seed)
         {
-            // From Idle → Spin
-            Map<IdleState>(Trigger.SpinRequested,     (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!));
-            Map<IdleState>(Trigger.AutoSpinRequested, (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!));
-
-            // From Spin → Result
-            // p = SpinResultEvent (o el tipus de resultat que facis servir)
-            //Map<SpinState>(Trigger.SpinFinished,      (m, p) => new ResultState(m, (SpinResultEvent)p!));
-            // From Result → Spin (si el jugador torna a spinar des del resultat)
-           // Map<ResultState>(Trigger.SpinRequested,   (m, p) => new SpinState(m, (decimal)p!));
-
-            // Exemple addicional si tens bonus:
-            // Map<ResultState>(Trigger.BonusEntered, (m, p) => new BonusState(m, (BonusData)p!));
+            // From Idle --> Spin
+            Map<IdleState>(Trigger.SpinRequested,     (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!, rng));
+            Map<IdleState>(Trigger.AutoSpinRequested, (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!, rng));
+            //From Spin --> Evaluate
+            Map<SpinState>(Trigger.SpinFinished, (machine, metadata) => new EvaluationState(machine, gameEventBus, (decimal)metadata!));
+            //From Evaluate --> Bonus?
+            //From Evaluate --> Payout
+            Map<EvaluationState>(Trigger.EvaluationDone, (machine, metadata) => new PayoutState(machine, gameEventBus, (decimal)metadata!));
         }
 
         /// <summary>
@@ -50,17 +46,6 @@ namespace SlotLab.Engine.Games
                 new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode))
             );
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
