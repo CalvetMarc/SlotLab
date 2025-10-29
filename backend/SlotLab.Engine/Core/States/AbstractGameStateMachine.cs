@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SlotLab.Engine.Games;
 using SlotLab.Engine.Models;
 
 namespace SlotLab.Engine.Core
@@ -7,18 +8,10 @@ namespace SlotLab.Engine.Core
     public abstract class AbstractGameStateMachine : IGameStateMachine
     {
         public AbstractGameState CurrentState { get; private set; } = null!;
-        public readonly GameEventBus gameEventBus = new();
-        protected readonly Rng rng;
-        private readonly Dictionary<(Type, Trigger), Func<AbstractGameStateMachine, object?, AbstractGameState>> _routes = new(); // (stateType, trigger) => (machine, metadata) -> nextState
+        private readonly Dictionary<(Type, Trigger), Func<AbstractGameStateMachine, object?, AbstractGameState>> _routes = new(); // (stateType, trigger) => (machine, metadata) -> nextState  
         
-        public AbstractGameStateMachine(ulong? seed = null)
-        {
-            rng = new Rng(seed ?? (ulong)DateTime.UtcNow.Ticks);
-        }
 
-        // Registrar rutes
-        protected void Map<TState>(Trigger trigger, Func<AbstractGameStateMachine, object?, AbstractGameState> factory) where TState : AbstractGameState =>
-         _routes[(typeof(TState), trigger)] = factory;
+        protected void Map<TState>(Trigger trigger, Func<AbstractGameStateMachine, object?, AbstractGameState> factory) where TState : AbstractGameState => _routes[(typeof(TState), trigger)] = factory; //Paths registry
 
         public void Fire(Trigger trigger, object? metadata = null)
         {

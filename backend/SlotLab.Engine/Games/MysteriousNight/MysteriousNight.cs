@@ -1,36 +1,21 @@
 using SlotLab.Engine.Core.Base;
 using SlotLab.Engine.Core;
 using SlotLab.Engine.Models;
+using SlotLab.Engine.Games;
 
-namespace SlotLab.Engine.Games
-{
-    /// <summary>
-    /// Game state machine for the "MysteriousNight" slot.
-    /// Declares the flow with a route table: (State, Trigger) -> Next State factory.
-    /// </summary>
-    public sealed class MysteriousNight : AbstractGameStateMachine
-    {
-        public MysteriousNight(ulong? seed = null) : base(seed)
-        {
-            // From Idle --> Spin
-            Map<IdleState>(Trigger.SpinRequested,     (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!, rng));
-            Map<IdleState>(Trigger.AutoSpinRequested, (machine, metadata) => new SpinState(machine, gameEventBus, (decimal)metadata!, rng));
-            //From Spin --> Evaluate
-            Map<SpinState>(Trigger.SpinFinished, (machine, metadata) => new EvaluationState(machine, gameEventBus, (decimal)metadata!));
-            //From Evaluate --> Bonus?
-            //From Evaluate --> Payout
-            Map<EvaluationState>(Trigger.EvaluationDone, (machine, metadata) => new PayoutState(machine, gameEventBus, (decimal)metadata!));
-        }
 
-        /// <summary>
-        /// Helper per arrencar el joc en Idle.
-        /// </summary>
-        public void Start()
+/// <summary>
+/// Game state machine for the "MysteriousNight" slot.
+/// Declares the flow with a route table: (State, Trigger) -> Next State factory.
+/// </summary>
+    public sealed class MysteriousNight : BaseGame
+    {       
+        public MysteriousNight(ulong? seed = null) : base(new MysteriousNightStateFactory(), seed)
         {
-            SetInitialState(new IdleState(this, gameEventBus));
+            
         }
     }
-}
+
 
 
 /*

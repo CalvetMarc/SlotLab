@@ -9,6 +9,6 @@ namespace SlotLab.Engine.Core
         void SetInitialState(AbstractGameState newState);
         void Tick(GameMechanicInputData input);
         void ChangeState(AbstractGameState newState);
-        void Fire(Trigger trigger, object? payload = null);
+        void Fire(Trigger trigger, object? metadata = null);
     }
 }

@@ -6,18 +6,17 @@ namespace SlotLab.Engine.Core
     /// Represents the idle state between spins. 
     /// It waits for external events (e.g. PlayerSpin, AutoSpin) to trigger the next state.
     /// </summary> 
-    public class EvaluationState : AbstractGameState
+    public class BonusIntro : AbstractGameState
     {
-        private readonly decimal bet;
-        public EvaluationState(IGameStateMachine machine, GameEventBus gameEventBus, decimal bet) : base(machine, gameEventBus)
+
+        public BonusIntro(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus)
         {
-            this.bet = bet;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            
+
         }
 
         public override void OnExit()
@@ -28,6 +27,7 @@ namespace SlotLab.Engine.Core
 
         protected override void HandleEvent(AbstractEvent gameEvent)
         {
+            base.HandleEvent(gameEvent);
             
         }
     

@@ -9,8 +9,12 @@ namespace SlotLab.Engine.Core
     public class IdleState : AbstractGameState
     {
         private Action<IGameplayEvent>? _gameplayHandler;
+        private readonly bool IsAuto;
 
-        public IdleState(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus) { }
+        public IdleState(IGameStateMachine machine, GameEventBus gameEventBus, bool IsAuto) : base(machine, gameEventBus)
+        {
+            this.IsAuto = IsAuto;
+        }
 
         public override void OnEnter()
         {
@@ -33,7 +37,7 @@ namespace SlotLab.Engine.Core
             switch (gameEvent)
             {
                 case SpinEvent spin:
-                    machine.Fire(Trigger.SpinRequested, spin.Bet);
+                    machine.Fire(Trigger.SpinRequested, spin.Metadata);
                     break;            
             }
         }
