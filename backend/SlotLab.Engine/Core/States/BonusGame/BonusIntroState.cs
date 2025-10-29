@@ -6,10 +6,10 @@ namespace SlotLab.Engine.Core
     /// Represents the idle state between spins. 
     /// It waits for external events (e.g. PlayerSpin, AutoSpin) to trigger the next state.
     /// </summary> 
-    public class BonusIntro : AbstractGameState
+    public class BonusIntroState : AbstractGameState
     {
 
-        public BonusIntro(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus)
+        public BonusIntroState(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus)
         {
         }
 

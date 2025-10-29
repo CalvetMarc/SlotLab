@@ -24,6 +24,7 @@ namespace SlotLab.Engine.Core
         protected override void HandleEvent(AbstractEvent gameEvent)
         {
             base.HandleEvent(gameEvent);
+            
         }
     
     }
