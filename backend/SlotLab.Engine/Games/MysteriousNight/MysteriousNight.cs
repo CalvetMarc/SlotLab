@@ -2,19 +2,25 @@ using SlotLab.Engine.Core.Base;
 using SlotLab.Engine.Core;
 using SlotLab.Engine.Models;
 using SlotLab.Engine.Games;
+using System.Text.Json.Nodes;
 
 
 /// <summary>
 /// Game state machine for the "MysteriousNight" slot.
 /// Declares the flow with a route table: (State, Trigger) -> Next State factory.
 /// </summary>
-    public sealed class MysteriousNight : BaseGame
-    {       
-        public MysteriousNight(ulong? seed = null) : base(new MysteriousNightStateFactory(), seed)
-        {
-            
-        }
+public sealed class MysteriousNight : BaseGame
+{
+    private readonly GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData> gameBase;
+    public MysteriousNight(JsonNode jsonNode, ulong? seed = null) : base(new MysteriousNightBaseStateFactory(), seed)
+    {
+        gameBase = new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
+            new GridReelsSymbolsProvider_Default(Data_GridReelsSymbolsProvider.Load(jsonNode)),
+            new LineBasedEvaluator_Default(Data_LineBasedEvaluator.Load(jsonNode)),
+            new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode))
+        );
     }
+}
 
 
 

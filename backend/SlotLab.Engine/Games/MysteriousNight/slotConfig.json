@@ -1,526 +1,530 @@
 {
-  "grid": [
-    {
-      "Columns": 5,
-      "Rows": 3
-    }
-  ],
-  "strips": {
-    "Strip 1": [
-      "A",
-      "Q",
-      "King",
-      "Wolf",
-      "Q",
-      "Wolf",
-      "J",
-      "K",
-      "A",
-      "Q",
-      "Wolf",
-      "A",
-      "Wolf",
-      "Q",
-      "A",
-      "Queen",
-      "Scatter",
-      "Q",
-      "J",
-      "K",
-      "Queen",
-      "A",
-      "Q",
-      "K",
-      "A",
-      "J",
-      "Queen",
-      "K",
-      "J",
-      "J",
-      "K",
-      "Scatter",
-      "J",
-      "Q",
-      "King",
-      "A",
-      "King",
-      "K",
-      "A",
-      "A",
-      "J",
-      "Queen",
-      "Q",
-      "Wolf",
-      "K",
-      "K",
-      "Q",
-      "King",
-      "J",
-      "J"
+  "base": {
+    "grid": [
+      {
+        "Columns": 5,
+        "Rows": 3
+      }
     ],
-    "Strip 2": [
-      "Queen",
-      "J",
-      "Q",
-      "A",
-      "Queen",
-      "K",
-      "Scatter",
-      "A",
-      "Wild",
-      "Wolf",
-      "K",
-      "A",
-      "J",
-      "K",
-      "Queen",
-      "J",
-      "King",
-      "A",
-      "Q",
-      "Wolf",
-      "K",
-      "Q",
-      "J",
-      "A",
-      "K",
-      "Queen",
-      "J",
-      "A",
-      "Q",
-      "K",
-      "Wild",
-      "Wolf",
-      "K",
-      "Q",
-      "Wild",
-      "K",
-      "J",
-      "Q",
-      "Wolf",
-      "J",
-      "K",
-      "A",
-      "Q",
-      "J",
-      "Wolf",
-      "King",
-      "J",
-      "Q",
-      "A",
-      "King"
+    "strips": {
+      "Strip 1": [
+        "A",
+        "Q",
+        "King",
+        "Wolf",
+        "Q",
+        "Wolf",
+        "J",
+        "K",
+        "A",
+        "Q",
+        "Wolf",
+        "A",
+        "Wolf",
+        "Q",
+        "A",
+        "Queen",
+        "Scatter",
+        "Q",
+        "J",
+        "K",
+        "Queen",
+        "A",
+        "Q",
+        "K",
+        "A",
+        "J",
+        "Queen",
+        "K",
+        "J",
+        "J",
+        "K",
+        "Scatter",
+        "J",
+        "Q",
+        "King",
+        "A",
+        "King",
+        "K",
+        "A",
+        "A",
+        "J",
+        "Queen",
+        "Q",
+        "Wolf",
+        "K",
+        "K",
+        "Q",
+        "King",
+        "J",
+        "J"
+      ],
+      "Strip 2": [
+        "Queen",
+        "J",
+        "Q",
+        "A",
+        "Queen",
+        "K",
+        "Scatter",
+        "A",
+        "Wild",
+        "Wolf",
+        "K",
+        "A",
+        "J",
+        "K",
+        "Queen",
+        "J",
+        "King",
+        "A",
+        "Q",
+        "Wolf",
+        "K",
+        "Q",
+        "J",
+        "A",
+        "K",
+        "Queen",
+        "J",
+        "A",
+        "Q",
+        "K",
+        "Wild",
+        "Wolf",
+        "K",
+        "Q",
+        "Wild",
+        "K",
+        "J",
+        "Q",
+        "Wolf",
+        "J",
+        "K",
+        "A",
+        "Q",
+        "J",
+        "Wolf",
+        "King",
+        "J",
+        "Q",
+        "A",
+        "King"
+      ],
+      "Strip 3": [
+        "King",
+        "J",
+        "Queen",
+        "Q",
+        "Wolf",
+        "J",
+        "Queen",
+        "Q",
+        "Wolf",
+        "K",
+        "K",
+        "Scatter",
+        "Q",
+        "K",
+        "J",
+        "K",
+        "A",
+        "Wolf",
+        "Q",
+        "J",
+        "Wild",
+        "King",
+        "A",
+        "Wolf",
+        "Queen",
+        "Q",
+        "J",
+        "K",
+        "A",
+        "Queen",
+        "J",
+        "A",
+        "King",
+        "Q",
+        "A",
+        "Q",
+        "K",
+        "Q",
+        "Queen",
+        "J",
+        "Q",
+        "K",
+        "A",
+        "Wolf",
+        "Wild",
+        "K",
+        "A",
+        "J",
+        "A",
+        "J"
+      ],
+      "Strip 4": [
+        "J",
+        "K",
+        "A",
+        "Q",
+        "Wild",
+        "K",
+        "J",
+        "Queen",
+        "Q",
+        "A",
+        "K",
+        "K",
+        "Q",
+        "J",
+        "K",
+        "A",
+        "King",
+        "Wolf",
+        "Queen",
+        "Q",
+        "A",
+        "J",
+        "K",
+        "J",
+        "A",
+        "Q",
+        "J",
+        "King",
+        "J",
+        "K",
+        "A",
+        "Q",
+        "J",
+        "Queen",
+        "K",
+        "Wild",
+        "A",
+        "J",
+        "Q",
+        "Scatter",
+        "Q",
+        "Wolf",
+        "King",
+        "Q",
+        "J",
+        "A",
+        "Wolf",
+        "Queen",
+        "A",
+        "Wolf"
+      ],
+      "Strip 5": [
+        "A",
+        "K",
+        "J",
+        "A",
+        "Q",
+        "Scatter",
+        "K",
+        "J",
+        "K",
+        "King",
+        "Wolf",
+        "Queen",
+        "A",
+        "A",
+        "K",
+        "J",
+        "K",
+        "Wolf",
+        "Q",
+        "Q",
+        "A",
+        "Q",
+        "J",
+        "K",
+        "J",
+        "A",
+        "Wolf",
+        "Q",
+        "A",
+        "Wild",
+        "Q",
+        "J",
+        "A",
+        "King",
+        "K",
+        "Q",
+        "J",
+        "K",
+        "Wolf",
+        "Wild",
+        "Queen",
+        "Q",
+        "J",
+        "A",
+        "King",
+        "Q",
+        "Wolf",
+        "Queen",
+        "J",
+        "Queen"
+      ]
+    },
+    "paylines": [
+      {
+        "Reel 1": 1,
+        "Reel 2": 1,
+        "Reel 3": 1,
+        "Reel 4": 1,
+        "Reel 5": 1
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 0,
+        "Reel 3": 0,
+        "Reel 4": 0,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 2,
+        "Reel 3": 2,
+        "Reel 4": 2,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 1,
+        "Reel 3": 2,
+        "Reel 4": 1,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 1,
+        "Reel 3": 0,
+        "Reel 4": 1,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 0,
+        "Reel 3": 1,
+        "Reel 4": 0,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 2,
+        "Reel 3": 1,
+        "Reel 4": 2,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 1,
+        "Reel 3": 1,
+        "Reel 4": 1,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 1,
+        "Reel 3": 1,
+        "Reel 4": 1,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 1,
+        "Reel 2": 0,
+        "Reel 3": 0,
+        "Reel 4": 0,
+        "Reel 5": 1
+      },
+      {
+        "Reel 1": 1,
+        "Reel 2": 2,
+        "Reel 3": 2,
+        "Reel 4": 2,
+        "Reel 5": 1
+      },
+      {
+        "Reel 1": 1,
+        "Reel 2": 0,
+        "Reel 3": 1,
+        "Reel 4": 0,
+        "Reel 5": 1
+      },
+      {
+        "Reel 1": 1,
+        "Reel 2": 2,
+        "Reel 3": 1,
+        "Reel 4": 2,
+        "Reel 5": 1
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 0,
+        "Reel 3": 1,
+        "Reel 4": 1,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 2,
+        "Reel 3": 1,
+        "Reel 4": 1,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 1,
+        "Reel 3": 0,
+        "Reel 4": 1,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 1,
+        "Reel 3": 2,
+        "Reel 4": 1,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 0,
+        "Reel 2": 0,
+        "Reel 3": 1,
+        "Reel 4": 2,
+        "Reel 5": 2
+      },
+      {
+        "Reel 1": 2,
+        "Reel 2": 2,
+        "Reel 3": 1,
+        "Reel 4": 0,
+        "Reel 5": 0
+      },
+      {
+        "Reel 1": 1,
+        "Reel 2": 1,
+        "Reel 3": 0,
+        "Reel 4": 0,
+        "Reel 5": 1
+      }
     ],
-    "Strip 3": [
-      "King",
-      "J",
-      "Queen",
-      "Q",
-      "Wolf",
-      "J",
-      "Queen",
-      "Q",
-      "Wolf",
-      "K",
-      "K",
-      "Scatter",
-      "Q",
-      "K",
-      "J",
-      "K",
-      "A",
-      "Wolf",
-      "Q",
-      "J",
-      "Wild",
-      "King",
-      "A",
-      "Wolf",
-      "Queen",
-      "Q",
-      "J",
-      "K",
-      "A",
-      "Queen",
-      "J",
-      "A",
-      "King",
-      "Q",
-      "A",
-      "Q",
-      "K",
-      "Q",
-      "Queen",
-      "J",
-      "Q",
-      "K",
-      "A",
-      "Wolf",
-      "Wild",
-      "K",
-      "A",
-      "J",
-      "A",
-      "J"
-    ],
-    "Strip 4": [
-      "J",
-      "K",
-      "A",
-      "Q",
-      "Wild",
-      "K",
-      "J",
-      "Queen",
-      "Q",
-      "A",
-      "K",
-      "K",
-      "Q",
-      "J",
-      "K",
-      "A",
-      "King",
-      "Wolf",
-      "Queen",
-      "Q",
-      "A",
-      "J",
-      "K",
-      "J",
-      "A",
-      "Q",
-      "J",
-      "King",
-      "J",
-      "K",
-      "A",
-      "Q",
-      "J",
-      "Queen",
-      "K",
-      "Wild",
-      "A",
-      "J",
-      "Q",
-      "Scatter",
-      "Q",
-      "Wolf",
-      "King",
-      "Q",
-      "J",
-      "A",
-      "Wolf",
-      "Queen",
-      "A",
-      "Wolf"
-    ],
-    "Strip 5": [
-      "A",
-      "K",
-      "J",
-      "A",
-      "Q",
-      "Scatter",
-      "K",
-      "J",
-      "K",
-      "King",
-      "Wolf",
-      "Queen",
-      "A",
-      "A",
-      "K",
-      "J",
-      "K",
-      "Wolf",
-      "Q",
-      "Q",
-      "A",
-      "Q",
-      "J",
-      "K",
-      "J",
-      "A",
-      "Wolf",
-      "Q",
-      "A",
-      "Wild",
-      "Q",
-      "J",
-      "A",
-      "King",
-      "K",
-      "Q",
-      "J",
-      "K",
-      "Wolf",
-      "Wild",
-      "Queen",
-      "Q",
-      "J",
-      "A",
-      "King",
-      "Q",
-      "Wolf",
-      "Queen",
-      "J",
-      "Queen"
+    "paytable": [
+      {
+        "Symbol": "J",
+        "Pay 3": 0.3,
+        "Pay4": 0.65,
+        "Pay5": 1.5
+      },
+      {
+        "Symbol": "Q",
+        "Pay 3": 0.3,
+        "Pay4": 0.65,
+        "Pay5": 1.5
+      },
+      {
+        "Symbol": "K",
+        "Pay 3": 0.3,
+        "Pay4": 0.65,
+        "Pay5": 1.5
+      },
+      {
+        "Symbol": "A",
+        "Pay 3": 0.3,
+        "Pay4": 0.65,
+        "Pay5": 1.5
+      },
+      {
+        "Symbol": "Wolf",
+        "Pay 3": 1,
+        "Pay4": 3,
+        "Pay5": 6
+      },
+      {
+        "Symbol": "Queen",
+        "Pay 3": 1.5,
+        "Pay4": 4.5,
+        "Pay5": 7
+      },
+      {
+        "Symbol": "King",
+        "Pay 3": 2,
+        "Pay4": 8,
+        "Pay5": 25
+      }
     ]
   },
-  "paylines": [
-    {
-      "Reel 1": 1,
-      "Reel 2": 1,
-      "Reel 3": 1,
-      "Reel 4": 1,
-      "Reel 5": 1
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 0,
-      "Reel 3": 0,
-      "Reel 4": 0,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 2,
-      "Reel 3": 2,
-      "Reel 4": 2,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 1,
-      "Reel 3": 2,
-      "Reel 4": 1,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 1,
-      "Reel 3": 0,
-      "Reel 4": 1,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 0,
-      "Reel 3": 1,
-      "Reel 4": 0,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 2,
-      "Reel 3": 1,
-      "Reel 4": 2,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 1,
-      "Reel 3": 1,
-      "Reel 4": 1,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 1,
-      "Reel 3": 1,
-      "Reel 4": 1,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 1,
-      "Reel 2": 0,
-      "Reel 3": 0,
-      "Reel 4": 0,
-      "Reel 5": 1
-    },
-    {
-      "Reel 1": 1,
-      "Reel 2": 2,
-      "Reel 3": 2,
-      "Reel 4": 2,
-      "Reel 5": 1
-    },
-    {
-      "Reel 1": 1,
-      "Reel 2": 0,
-      "Reel 3": 1,
-      "Reel 4": 0,
-      "Reel 5": 1
-    },
-    {
-      "Reel 1": 1,
-      "Reel 2": 2,
-      "Reel 3": 1,
-      "Reel 4": 2,
-      "Reel 5": 1
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 0,
-      "Reel 3": 1,
-      "Reel 4": 1,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 2,
-      "Reel 3": 1,
-      "Reel 4": 1,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 1,
-      "Reel 3": 0,
-      "Reel 4": 1,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 1,
-      "Reel 3": 2,
-      "Reel 4": 1,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 0,
-      "Reel 2": 0,
-      "Reel 3": 1,
-      "Reel 4": 2,
-      "Reel 5": 2
-    },
-    {
-      "Reel 1": 2,
-      "Reel 2": 2,
-      "Reel 3": 1,
-      "Reel 4": 0,
-      "Reel 5": 0
-    },
-    {
-      "Reel 1": 1,
-      "Reel 2": 1,
-      "Reel 3": 0,
-      "Reel 4": 0,
-      "Reel 5": 1
-    }
-  ],
-  "paytable": [
-    {
-      "Symbol": "J",
-      "Pay 3": 0.3,
-      "Pay4": 0.65,
-      "Pay5": 1.5
-    },
-    {
-      "Symbol": "Q",
-      "Pay 3": 0.3,
-      "Pay4": 0.65,
-      "Pay5": 1.5
-    },
-    {
-      "Symbol": "K",
-      "Pay 3": 0.3,
-      "Pay4": 0.65,
-      "Pay5": 1.5
-    },
-    {
-      "Symbol": "A",
-      "Pay 3": 0.3,
-      "Pay4": 0.65,
-      "Pay5": 1.5
-    },
-    {
-      "Symbol": "Wolf",
-      "Pay 3": 1,
-      "Pay4": 3,
-      "Pay5": 6
-    },
-    {
-      "Symbol": "Queen",
-      "Pay 3": 1.5,
-      "Pay4": 4.5,
-      "Pay5": 7
-    },
-    {
-      "Symbol": "King",
-      "Pay 3": 2,
-      "Pay4": 8,
-      "Pay5": 25
-    }
-  ],
-  "bonus_spawner_probabilites": [
-    {
-      "Card Back": 59.099999999999994,
-      "Card Front": 33.7,
-      "Chest": 6.0,
-      "Bonus Symbol": 1.2
-    }
-  ],
-  "card_multiplier_spawner": [
-    {
-      "Card Multiplier": 1,
-      "Probaility %": 21.2471093
-    },
-    {
-      "Card Multiplier": 2,
-      "Probaility %": 17.31639408
-    },
-    {
-      "Card Multiplier": 3,
-      "Probaility %": 14.11286118
-    },
-    {
-      "Card Multiplier": 4,
-      "Probaility %": 11.50198186
-    },
-    {
-      "Card Multiplier": 5,
-      "Probaility %": 9.374115215
-    },
-    {
-      "Card Multiplier": 6,
-      "Probaility %": 7.6399039
-    },
-    {
-      "Card Multiplier": 7,
-      "Probaility %": 6.226521678
-    },
-    {
-      "Card Multiplier": 8,
-      "Probaility %": 5.074615168
-    },
-    {
-      "Card Multiplier": 9,
-      "Probaility %": 4.135811362
-    },
-    {
-      "Card Multiplier": 10,
-      "Probaility %": 3.37068626
-    }
-  ],
-  "levels": [
-    {
-      "Level": 1,
-      "Scatter": 3,
-      "Start Free Spins": 10,
-      "Bonus to upgrade": 3
-    },
-    {
-      "Level": 2,
-      "Scatter": 4,
-      "Start Free Spins": 20,
-      "Bonus to upgrade": 3
-    },
-    {
-      "Level": 3,
-      "Scatter": 5,
-      "Start Free Spins": 30,
-      "Bonus to upgrade": 0
-    }
-  ]
+  "bonus": {
+    "bonus_spawner_probabilites": [
+      {
+        "Card Back": 59.099999999999994,
+        "Card Front": 33.7,
+        "Chest": 6.0,
+        "Bonus Symbol": 1.2
+      }
+    ],
+    "card_multiplier_spawner": [
+      {
+        "Card Multiplier": 1,
+        "Probaility %": 21.2471093
+      },
+      {
+        "Card Multiplier": 2,
+        "Probaility %": 17.31639408
+      },
+      {
+        "Card Multiplier": 3,
+        "Probaility %": 14.11286118
+      },
+      {
+        "Card Multiplier": 4,
+        "Probaility %": 11.50198186
+      },
+      {
+        "Card Multiplier": 5,
+        "Probaility %": 9.374115215
+      },
+      {
+        "Card Multiplier": 6,
+        "Probaility %": 7.6399039
+      },
+      {
+        "Card Multiplier": 7,
+        "Probaility %": 6.226521678
+      },
+      {
+        "Card Multiplier": 8,
+        "Probaility %": 5.074615168
+      },
+      {
+        "Card Multiplier": 9,
+        "Probaility %": 4.135811362
+      },
+      {
+        "Card Multiplier": 10,
+        "Probaility %": 3.37068626
+      }
+    ],
+    "levels": [
+      {
+        "Level": 1,
+        "Scatter": 3,
+        "Start Free Spins": 10,
+        "Bonus to upgrade": 3
+      },
+      {
+        "Level": 2,
+        "Scatter": 4,
+        "Start Free Spins": 20,
+        "Bonus to upgrade": 3
+      },
+      {
+        "Level": 3,
+        "Scatter": 5,
+        "Start Free Spins": 30,
+        "Bonus to upgrade": 0
+      }
+    ]
+  }
 }
