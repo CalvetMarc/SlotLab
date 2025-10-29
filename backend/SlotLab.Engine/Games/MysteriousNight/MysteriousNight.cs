@@ -11,15 +11,17 @@ using System.Text.Json.Nodes;
 /// </summary>
 public sealed class MysteriousNight : BaseGame
 {
-    private readonly GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData> gameBase;
-    public MysteriousNight(JsonNode jsonNode, ulong? seed = null) : base(new MysteriousNightBaseStateFactory(), seed)
+    public MysteriousNight(JsonNode jsonNode, ulong? seed = null) : base(seed)
     {
-        gameBase = new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
+        IGameMechanicComponents baseGameComponents = new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
             new GridReelsSymbolsProvider_Default(Data_GridReelsSymbolsProvider.Load(jsonNode)),
             new LineBasedEvaluator_Default(Data_LineBasedEvaluator.Load(jsonNode)),
             new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode))
         );
-    }
+
+        baseGameData = new BaseGameData(baseGameComponents, new Rng(seed ?? (ulong)DateTime.UtcNow.Ticks));
+        slotStateFactory = new MysteriousNightBaseStateFactory();
+    } 
 }
 
 

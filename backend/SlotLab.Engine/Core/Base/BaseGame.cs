@@ -12,27 +12,23 @@ namespace SlotLab.Engine.Games
     public abstract class BaseGame : AbstractGameStateMachine
     {
         public readonly GameEventBus gameEventBus = new();
-        protected readonly Rng rng;
-        protected readonly IBaseGameStateFactory slotStateFactory;
-        protected bool IsAuto = false;
+        protected BaseGameData baseGameData { get; init; } = null!;
+        protected IBaseGameStateFactory slotStateFactory { get; init; } = null!;
 
-        protected BaseGame(IBaseGameStateFactory slotStateFactory, ulong? seed = null)
-        {
-            this.slotStateFactory = slotStateFactory;
-            rng = new Rng(seed ?? (ulong)DateTime.UtcNow.Ticks);
-
-            // Define the common state flow
-            Map<IdleState>(Trigger.SpinRequested, (machine, metadata) => slotStateFactory.CreateSpinState(machine, gameEventBus, rng));
-            Map<SpinState>(Trigger.SpinFinished, (machine, metadata) => slotStateFactory.CreateEvaluationState(machine, gameEventBus));
-            Map<EvaluationState>(Trigger.EvaluationDone, (machine, metadata) => slotStateFactory.CreatePayoutState(machine, gameEventBus, 2));
-        }
+        public BaseGame(ulong? seed = null) { }
 
         /// <summary>
-        /// Starts the game in the initial Idle state.
+        /// Define the common state flow and starts the game in the initial Idle state.
         /// </summary>
-        public void Start()
+        public override void InitializeFSM()
         {
-            SetInitialState(slotStateFactory.CreateIdleState(this, gameEventBus, IsAuto));
-        }        
+            base.InitializeFSM();
+
+            Map<IdleState>(Trigger.SpinRequested, (machine, metadata) => slotStateFactory.CreateSpinState(machine, gameEventBus, baseGameData.NumbersGenerator));
+            Map<SpinState>(Trigger.SpinFinished, (machine, metadata) => slotStateFactory.CreateEvaluationState(machine, gameEventBus));
+            Map<EvaluationState>(Trigger.EvaluationDone, (machine, metadata) => slotStateFactory.CreatePayoutState(machine, gameEventBus, 2));
+
+            SetInitialState(slotStateFactory.CreateIdleState(this, gameEventBus, baseGameData.IsAuto));
+        }                      
     }
 }

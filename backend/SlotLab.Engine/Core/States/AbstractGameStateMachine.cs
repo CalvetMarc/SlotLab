@@ -7,11 +7,22 @@ namespace SlotLab.Engine.Core
 {
     public abstract class AbstractGameStateMachine : IGameStateMachine
     {
-        public AbstractGameState CurrentState { get; private set; } = null!;
+        protected AbstractGameState CurrentState { get; private set; } = null!;
         private readonly Dictionary<(Type, Trigger), Func<AbstractGameStateMachine, object?, AbstractGameState>> _routes = new(); // (stateType, trigger) => (machine, metadata) -> nextState  
         
 
         protected void Map<TState>(Trigger trigger, Func<AbstractGameStateMachine, object?, AbstractGameState> factory) where TState : AbstractGameState => _routes[(typeof(TState), trigger)] = factory; //Paths registry
+
+
+        public virtual void InitializeFSM() {}
+
+        public void Tick(GameMechanicInputData input)
+        {
+            if (CurrentState == null)
+                throw new InvalidOperationException("State machine has no active state.");
+
+            CurrentState.Tick(input);
+        }
 
         public void Fire(Trigger trigger, object? metadata = null)
         {
@@ -28,27 +39,20 @@ namespace SlotLab.Engine.Core
             }
         }
 
-        public void SetInitialState(AbstractGameState newState)
+        protected virtual void SetInitialState(AbstractGameState newState)
         {
             CurrentState = newState ?? throw new ArgumentNullException(nameof(newState));
             CurrentState.OnEnter();
-        }
-
-        public void Tick(GameMechanicInputData input)
-        {
-            if (CurrentState == null)
-                throw new InvalidOperationException("State machine has no active state.");
-
-            CurrentState.Tick(input);
-        }
-
-        public void ChangeState(AbstractGameState newState)
+        }        
+        
+        protected virtual void ChangeState(AbstractGameState newState)
         {
             if (newState == null) throw new ArgumentNullException(nameof(newState));
             
             CurrentState?.OnExit();
             CurrentState = newState;
             CurrentState.OnEnter();
-        }
+        }        
+        
     }
 }

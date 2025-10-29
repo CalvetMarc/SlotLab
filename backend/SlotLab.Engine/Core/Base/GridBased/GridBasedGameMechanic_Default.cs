@@ -9,7 +9,7 @@ namespace SlotLab.Engine.Core.Base
     /// <typeparam name="TOutput">
     /// The specific evaluation output type produced by the evaluator and used by the payout calculator.
     /// </typeparam>
-    public class GridBasedGameMechanic_Default<TOutput>  where TOutput : GridEvaluatorOutputRulesData
+    public class GridBasedGameMechanic_Default<TOutput> : IGameMechanicComponents where TOutput : GridEvaluatorOutputRulesData
     {
         public IGridSymbolsProvider SymbolsProvider { get; }
         public IGridEvaluator<TOutput> GameEvaluator { get; }
