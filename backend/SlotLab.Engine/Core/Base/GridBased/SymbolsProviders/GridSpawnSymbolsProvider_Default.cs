@@ -22,7 +22,7 @@ namespace SlotLab.Engine.Core
             this.spawnerTable = spawnerTable;
         }
 
-        public SpinResultData Spin()
+        public SpinResultData Spin(Rng rng)
         {
             int rows = gameReels.FirstOrDefault()?.Count ?? 0;
             int cols = gameReels.Count;
@@ -50,7 +50,7 @@ namespace SlotLab.Engine.Core
                             continue;
 
                         // Fem el roll RNG per a aquesta taula
-                        double roll = Rng.NextFloatBetween(0.0, 100.0);
+                        double roll = rng.NextFloatBetween(0.0, 100.0);
                         double cumulative = 0.0;
                         string? newSymbol = null;
 

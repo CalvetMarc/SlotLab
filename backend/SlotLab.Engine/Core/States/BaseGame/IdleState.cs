@@ -1,4 +1,5 @@
 using SlotLab.Engine.Models;
+using SlotLab.Engine.Core.Events;
 
 namespace SlotLab.Engine.Core
 {
@@ -47,10 +48,10 @@ namespace SlotLab.Engine.Core
             {
                 case SpinRequestEvent spin:
                     machine.Fire(Trigger.SpinRequested, spin.Metadata);
-                    break;            
+                    break;
             }
         }
-    
+
     }
 
 }

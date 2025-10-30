@@ -14,7 +14,7 @@ namespace SlotLab.Engine.Core
         /// </summary>
         /// <param name="gameStrips">The strips or symbol source for the current game.</param>
         /// <returns>SpinData containing the visible symbols and optional metadata.</returns>
-        SpinResultData Spin();
+        SpinResultData Spin(Rng rng);
         
     }
     

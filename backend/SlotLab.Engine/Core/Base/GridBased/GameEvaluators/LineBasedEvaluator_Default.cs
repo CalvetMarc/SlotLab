@@ -25,7 +25,7 @@ namespace SlotLab.Engine.Core
         /// A 2D list of visible symbols [column][row] representing the reel window.
         /// </param>
         /// <returns>Structured information about all detected winning lines.</returns>
-        public GridEvaluatorLineBasedOutputRulesData Evaluate(List<List<string>> visibleWindow)
+        public GridEvaluatorLineBasedOutputRulesData Evaluate(IReadOnlyList<IReadOnlyList<string>> visibleWindow)
         {
             // Stores all found winning lines (line number, base symbol, match count)
             var winningLines = new List<(int lineNumber, string symbol, int lineSymbolsCount)>();

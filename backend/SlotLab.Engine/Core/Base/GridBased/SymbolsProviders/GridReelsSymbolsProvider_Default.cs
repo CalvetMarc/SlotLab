@@ -12,7 +12,7 @@ namespace SlotLab.Engine.Core
             this.gridReelsSymbolsProviderData = gridReelsSymbolsProviderData;
         }
 
-        public SpinResultData Spin()
+        public SpinResultData Spin(Rng rng)
         {
             var visibleWindow = new List<List<string>>();
             var preRoll = new List<List<string>>();
@@ -21,7 +21,7 @@ namespace SlotLab.Engine.Core
             for (int reelIndex = 0; reelIndex < gridReelsSymbolsProviderData.GameStrips.Count; reelIndex++)
             {
                 var reel = gridReelsSymbolsProviderData.GameStrips[reelIndex];
-                int stopIndex = Rng.NextIntBetween(0, reel.Count - 1);
+                int stopIndex = rng.NextIntBetween(0, reel.Count - 1);
                 // --- PreRoll ---
                 var pre = new List<string>();
                 for (int i = gridReelsSymbolsProviderData.PreCount; i > 0; i--)

@@ -8,7 +8,7 @@ namespace SlotLab.Engine.Core
     /// </summary> 
     public class SpinState_MysteriousNight : SpinState
     {
-        public SpinState_MysteriousNight(IGameStateMachine machine, GameEventBus gameEventBus, Rng rng) : base(machine, gameEventBus, rng) { }
+        public SpinState_MysteriousNight(IGameStateMachine machine, GameEventBus gameEventBus, Rng rng, IGridSymbolsProvider gridSymbolsProvider) : base(machine, gameEventBus, rng, gridSymbolsProvider) { }
 
         public override void OnEnter()
         {

@@ -13,9 +13,9 @@ public sealed class MysteriousNight : BaseGame<GridEvaluatorLineBasedOutputRules
 {
     public MysteriousNight(JsonNode jsonNode, GameEnvironmentMode gameEnvironmentMode, ulong? seed = null) : base(
         new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
-            new GridReelsSymbolsProvider_Default(Data_GridReelsSymbolsProvider.Load(jsonNode)),
-            new LineBasedEvaluator_Default(Data_LineBasedEvaluator.Load(jsonNode)),
-            new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode))
+            new GridReelsSymbolsProvider_Default(Data_GridReelsSymbolsProvider.Load(jsonNode["base"]!)),
+            new LineBasedEvaluator_Default(Data_LineBasedEvaluator.Load(jsonNode["base"]!)),
+            new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode["base"]!))
         ), gameEnvironmentMode, seed)
     {
         slotStateFactory = new MysteriousNightBaseStateFactory<GridEvaluatorLineBasedOutputRulesData>();

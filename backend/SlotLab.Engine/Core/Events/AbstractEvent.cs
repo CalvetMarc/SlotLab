@@ -1,3 +1,6 @@
+using SlotLab.Engine.Models;
+using SlotLab.Engine.Core;
+
 namespace SlotLab.Engine.Core
 {
     /// <summary>

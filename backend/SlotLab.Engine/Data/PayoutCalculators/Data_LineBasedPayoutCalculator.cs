@@ -7,7 +7,7 @@ namespace SlotLab.Engine.Models
     /// </summary>
     public sealed class Data_LineBasedPayoutCalculator
     {
-        public IReadOnlyDictionary<string, IReadOnlyDictionary<int, double>> Paytable { get; init; } = new Dictionary<string, IReadOnlyDictionary<int, double>>();       
+        public IReadOnlyDictionary<string, IReadOnlyDictionary<int, Decimal>> Paytable { get; init; } = new Dictionary<string, IReadOnlyDictionary<int, decimal>>();       
 
         private Data_LineBasedPayoutCalculator() { }
 
@@ -17,18 +17,18 @@ namespace SlotLab.Engine.Models
                 throw new InvalidOperationException("JSON root is null.");           
 
             // --- PAYTABLE ---
-            var paytable = new Dictionary<string, Dictionary<int, double>>();
+            var paytable = new Dictionary<string, Dictionary<int, decimal>>();
             var paytableNode = root["paytable"]?.AsArray();
             if (paytableNode != null)
             {
                 foreach (var symbol in paytableNode)
                 {
                     string symbolName = symbol!["Symbol"]!.GetValue<string>();
-                    var payouts = new Dictionary<int, double>
+                    var payouts = new Dictionary<int, decimal>
                     {
-                        [3] = symbol!["Pay3"]?.GetValue<double>() ?? symbol!["Pay 3"]?.GetValue<double>() ?? 0.0,
-                        [4] = symbol!["Pay4"]?.GetValue<double>() ?? 0.0,
-                        [5] = symbol!["Pay5"]?.GetValue<double>() ?? 0.0
+                        [3] = symbol!["Pay3"]?.GetValue<decimal>() ?? symbol!["Pay 3"]?.GetValue<decimal>() ?? 0.0m,
+                        [4] = symbol!["Pay4"]?.GetValue<decimal>() ?? 0.0m,
+                        [5] = symbol!["Pay5"]?.GetValue<decimal>() ?? 0.0m
                     };
                     paytable[symbolName] = payouts;
                 }
@@ -38,7 +38,7 @@ namespace SlotLab.Engine.Models
             {
                 Paytable = paytable.ToDictionary(
                     kvp => kvp.Key,
-                    kvp => (IReadOnlyDictionary<int, double>)kvp.Value
+                    kvp => (IReadOnlyDictionary<int, decimal>)kvp.Value
                 )
             };
 

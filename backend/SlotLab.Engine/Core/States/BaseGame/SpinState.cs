@@ -1,4 +1,5 @@
 using SlotLab.Engine.Models;
+using SlotLab.Engine.Core.Events;
 
 namespace SlotLab.Engine.Core
 {
@@ -20,7 +21,7 @@ namespace SlotLab.Engine.Core
         public override void OnEnter()
         {
             base.OnEnter();
-            spinResultData = gridSymbolsProvider.Spin();    
+            spinResultData = gridSymbolsProvider.Spin(rng);    
             machine.Fire(Trigger.SpinFinished, spinResultData);
         }
 

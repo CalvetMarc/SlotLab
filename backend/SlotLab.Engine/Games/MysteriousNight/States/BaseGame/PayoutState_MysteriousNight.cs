@@ -1,4 +1,5 @@
 using SlotLab.Engine.Models;
+using SlotLab.Engine.Core.Events;
 
 namespace SlotLab.Engine.Core
 {
@@ -12,11 +13,11 @@ namespace SlotLab.Engine.Core
 
         public override void OnEnter()
         {
-            base.OnEnter();            
+            base.OnEnter();
         }
 
         public override void OnExit()
-        {           
+        {
 
             base.OnExit();
         }
@@ -25,7 +26,7 @@ namespace SlotLab.Engine.Core
         {
             base.HandleEvent(gameEvent);
         }
-    
+
     }
 
 }

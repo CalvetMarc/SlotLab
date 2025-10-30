@@ -1,4 +1,6 @@
 using SlotLab.Engine.Models;
+using SlotLab.Engine.Core.Events;
+
 
 namespace SlotLab.Engine.Core
 {
@@ -24,7 +26,7 @@ namespace SlotLab.Engine.Core
         public override void OnEnter()
         {
             base.OnEnter();
-            
+
             TOutput evaluationData = gridEvaluator.Evaluate(visibleWindow);
             decimal payoutAmmount = gridPayoutCalculator.Calculate(bet, evaluationData);
             machine.Fire(Trigger.SpinFinished, payoutAmmount);

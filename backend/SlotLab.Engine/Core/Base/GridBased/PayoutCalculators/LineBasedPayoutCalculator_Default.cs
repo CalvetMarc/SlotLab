@@ -25,9 +25,9 @@ namespace SlotLab.Engine.Core
         /// <param name="bet">The bet per spin.</param>
         /// <param name="evaluationData">The evaluation result containing all winning lines.</param>
         /// <returns>Total win amount.</returns>
-        public double Calculate(double bet, GridEvaluatorLineBasedOutputRulesData evaluationData)
+        public decimal Calculate(decimal bet, GridEvaluatorLineBasedOutputRulesData evaluationData)
         {
-            double totalWin = 0.0;
+            decimal totalWin = 0.0m;
 
             foreach (var (lineNumber, symbol, count) in evaluationData.linesInfo)
             {

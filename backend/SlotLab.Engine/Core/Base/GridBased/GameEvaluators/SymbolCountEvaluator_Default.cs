@@ -22,7 +22,7 @@ namespace SlotLab.Engine.Core
             this.symbolsToFind = symbolsToFind;
         }
 
-        public GridEvaluatorSymbolCountOutputRulesData Evaluate(List<List<string>> visibleWindow)
+        public GridEvaluatorSymbolCountOutputRulesData Evaluate(IReadOnlyList<IReadOnlyList<string>> visibleWindow)
         {
             // Dictionary that stores all detected positions for each target symbol
             var detections = new Dictionary<string, List<(int row, int col)>>();

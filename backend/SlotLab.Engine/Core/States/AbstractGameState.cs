@@ -1,4 +1,5 @@
 using SlotLab.Engine.Models;
+using SlotLab.Engine.Core.Events;
 
 namespace SlotLab.Engine.Core
 {
@@ -15,7 +16,7 @@ namespace SlotLab.Engine.Core
             this.gameEventBus = gameEventBus;
         }
 
-        protected virtual void HandleEvent(AbstractEvent gameEvent){}
+        protected virtual void HandleEvent(AbstractEvent gameEvent) { }
         /// <summary>
         /// Called when the state becomes active.
         /// Use this for initialization or UI setup.
@@ -31,6 +32,6 @@ namespace SlotLab.Engine.Core
         /// Executes one logic step in this state.
         /// Must be implemented by each specific state (BaseGame, Bonus, etc.).
         /// </summary>
-        public virtual void Tick(GameMechanicInputData input){}        
+        public virtual void Tick(GameMechanicInputData input) { }
     }
 }
