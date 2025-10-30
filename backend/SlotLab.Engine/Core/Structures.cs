@@ -5,8 +5,10 @@ namespace SlotLab.Engine.Core
         SpinRequested,
         SpinFinished,
         BonusEntered,
-        EvaluationDone
+        EvaluationDone,
+        TransactionDone,
     }
 
     public record SpinRequestedMetadata(decimal BetAmount, bool IsAuto);
+    public record RoundCompletedMetadata(decimal PayoutAmount, decimal PayoutFromBase, decimal PayoutFromBonus);
 }

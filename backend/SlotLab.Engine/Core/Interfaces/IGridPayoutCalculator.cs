@@ -17,6 +17,6 @@ namespace SlotLab.Engine.Core
         /// <param name="bet">Current bet per spin.</param>
         /// <param name="evaluationData">The evaluation output containing win details.</param>
         /// <returns>The total win amount for this spin.</returns>
-        double Calculate(double bet, TOutput evaluationData);
+        decimal Calculate(decimal bet, TOutput evaluationData);
     }
 }

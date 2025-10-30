@@ -8,17 +8,26 @@ namespace SlotLab.Engine.Core
     /// </summary> 
     public class IdleState : AbstractGameState
     {
-        private Action<IGameplayEvent>? _gameplayHandler;
-        private readonly bool IsAuto;
+        protected Action<SpinRequestEvent>? _gameplayHandler;
+        protected readonly bool IsAuto;
+        protected readonly GameEnvironmentMode gameEnvironmentMode;
 
-        public IdleState(IGameStateMachine machine, GameEventBus gameEventBus, bool IsAuto) : base(machine, gameEventBus)
+        public IdleState(IGameStateMachine machine, GameEventBus gameEventBus, bool IsAuto, GameEnvironmentMode gameEnvironmentMode) : base(machine, gameEventBus)
         {
             this.IsAuto = IsAuto;
+            this.gameEnvironmentMode = gameEnvironmentMode;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
+
+            if (gameEnvironmentMode == GameEnvironmentMode.Simulation)
+            {
+                var metadata = new SpinRequestedMetadata(BetAmount: 1.0m, IsAuto: true);
+                machine.Fire(Trigger.SpinRequested, metadata);
+                return;
+            }
 
             _gameplayHandler = e => HandleEvent((AbstractEvent)e);
             gameEventBus.Subscribe(_gameplayHandler);
@@ -36,7 +45,7 @@ namespace SlotLab.Engine.Core
         {
             switch (gameEvent)
             {
-                case SpinEvent spin:
+                case SpinRequestEvent spin:
                     machine.Fire(Trigger.SpinRequested, spin.Metadata);
                     break;            
             }

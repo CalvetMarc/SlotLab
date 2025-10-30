@@ -9,15 +9,19 @@ namespace SlotLab.Engine.Core
     public class SpinState : AbstractGameState
     {
         protected readonly Rng rng;
-        public SpinState(IGameStateMachine machine, GameEventBus gameEventBus, Rng rng) : base(machine, gameEventBus)
+        protected readonly IGridSymbolsProvider gridSymbolsProvider;
+        protected SpinResultData spinResultData = null!;
+        public SpinState(IGameStateMachine machine, GameEventBus gameEventBus, Rng rng, IGridSymbolsProvider gridSymbolsProvider) : base(machine, gameEventBus)
         {
             this.rng = rng;
+            this.gridSymbolsProvider = gridSymbolsProvider;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            
+            spinResultData = gridSymbolsProvider.Spin();    
+            machine.Fire(Trigger.SpinFinished, spinResultData);
         }
 
         public override void OnExit()

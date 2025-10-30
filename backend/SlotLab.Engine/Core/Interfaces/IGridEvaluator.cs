@@ -19,6 +19,6 @@ namespace SlotLab.Engine.Core
         /// <param name="visibleWindow">Matrix of symbols [reel][row]</param>
         /// <param name="bet">Current bet per spin</param>
         /// <returns>Structured evaluation data specific to this mechanic type.</returns>
-        TOutput Evaluate(List<List<string>> visibleWindow);
+        TOutput Evaluate(IReadOnlyList<IReadOnlyList<string>> visibleWindow);
     }
 }

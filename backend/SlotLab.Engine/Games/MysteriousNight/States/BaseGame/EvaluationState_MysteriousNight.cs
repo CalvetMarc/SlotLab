@@ -6,9 +6,10 @@ namespace SlotLab.Engine.Core
     /// Represents the idle state between spins. 
     /// It waits for external events (e.g. PlayerSpin, AutoSpin) to trigger the next state.
     /// </summary> 
-    public class EvaluationState_MysteriousNight : EvaluationState
+    public class EvaluationState_MysteriousNight<TOutput> : EvaluationState<TOutput> where TOutput : GridEvaluatorOutputRulesData
     {
-        public EvaluationState_MysteriousNight(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus) { }
+        public EvaluationState_MysteriousNight(IGameStateMachine machine, GameEventBus gameEventBus, List<List<string>> visibleWindow, decimal bet, IGridEvaluator<TOutput> gridEvaluator, IGridPayoutCalculator<TOutput> gridPayoutCalculator) 
+            : base(machine, gameEventBus, visibleWindow, bet, gridEvaluator, gridPayoutCalculator) { }
 
         public override void OnEnter()
         {

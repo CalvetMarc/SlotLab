@@ -6,16 +6,28 @@ namespace SlotLab.Engine.Core
     /// Represents the idle state between spins. 
     /// It waits for external events (e.g. PlayerSpin, AutoSpin) to trigger the next state.
     /// </summary> 
-    public class EvaluationState : AbstractGameState
+    public class EvaluationState<TOutput> : AbstractGameState where TOutput : GridEvaluatorOutputRulesData
     {
-        public EvaluationState(IGameStateMachine machine, GameEventBus gameEventBus) : base(machine, gameEventBus)
+        protected readonly decimal bet;
+        protected IReadOnlyList<IReadOnlyList<string>> visibleWindow;
+        protected readonly IGridPayoutCalculator<TOutput> gridPayoutCalculator;
+        protected readonly IGridEvaluator<TOutput> gridEvaluator;
+
+        public EvaluationState(IGameStateMachine machine, GameEventBus gameEventBus, List<List<string>> visibleWindow, decimal bet, IGridEvaluator<TOutput> gridEvaluator, IGridPayoutCalculator<TOutput> gridPayoutCalculator) : base(machine, gameEventBus)
         {
+            this.gridEvaluator = gridEvaluator;
+            this.visibleWindow = visibleWindow;
+            this.bet = bet;
+            this.gridPayoutCalculator = gridPayoutCalculator;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
             
+            TOutput evaluationData = gridEvaluator.Evaluate(visibleWindow);
+            decimal payoutAmmount = gridPayoutCalculator.Calculate(bet, evaluationData);
+            machine.Fire(Trigger.SpinFinished, payoutAmmount);
         }
 
         public override void OnExit()
