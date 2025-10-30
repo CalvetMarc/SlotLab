@@ -1,26 +1,28 @@
 using SlotLab.Engine.Core.Base;
 using SlotLab.Engine.Core;
 using SlotLab.Engine.Models;
-using SlotLab.Engine.Games;
 using System.Text.Json.Nodes;
 
-
-/// <summary>
-/// Game state machine for the "MysteriousNight" slot.
-/// Declares the flow with a route table: (State, Trigger) -> Next State factory.
-/// </summary>
-public sealed class MysteriousNight : BaseGame<GridEvaluatorLineBasedOutputRulesData>
+namespace SlotLab.Engine.Games
 {
-    public MysteriousNight(JsonNode jsonNode, GameEnvironmentMode gameEnvironmentMode, ulong? seed = null) : base(
-        new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
-            new GridReelsSymbolsProvider_Default(Data_GridReelsSymbolsProvider.Load(jsonNode["base"]!)),
-            new LineBasedEvaluator_Default(Data_LineBasedEvaluator.Load(jsonNode["base"]!)),
-            new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode["base"]!))
-        ), gameEnvironmentMode, seed)
+    /// <summary>
+    /// Game state machine for the "MysteriousNight" slot.
+    /// Declares the flow with a route table: (State, Trigger) -> Next State factory.
+    /// </summary>
+    public sealed class MysteriousNight : BaseGame<GridEvaluatorLineBasedOutputRulesData>
     {
-        slotStateFactory = new MysteriousNightBaseStateFactory<GridEvaluatorLineBasedOutputRulesData>();
+        public MysteriousNight(JsonNode jsonNode, GameEnvironmentMode gameEnvironmentMode, ulong? seed = null) : base(
+            new GridBasedGameMechanic_Default<GridEvaluatorLineBasedOutputRulesData>(
+                new GridReelsSymbolsProvider_Default(Data_GridReelsSymbolsProvider.Load(jsonNode["base"]!)),
+                new LineBasedEvaluator_Default(Data_LineBasedEvaluator.Load(jsonNode["base"]!)),
+                new LineBasedPayoutCalculator_Default(Data_LineBasedPayoutCalculator.Load(jsonNode["base"]!))
+            ), gameEnvironmentMode, seed)
+        {
+            slotStateFactory = new MysteriousNightBaseStateFactory<GridEvaluatorLineBasedOutputRulesData>();
+        }
     }
 }
+
 
 
 

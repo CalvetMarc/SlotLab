@@ -21,13 +21,7 @@ namespace SlotLab.Engine.Core
 
         public override void OnEnter()
         {
-            base.OnEnter();
-
-            if (gameEnvironmentMode == GameEnvironmentMode.Simulation)
-            {
-                machine.Fire(Trigger.TransactionDone, null);
-                return;
-            }
+            base.OnEnter();           
 
             _gameplayHandler = e => HandleEvent((AbstractEvent)e);
             gameEventBus.Subscribe(_gameplayHandler);            
@@ -41,17 +35,25 @@ namespace SlotLab.Engine.Core
             gameEventBus.Publish(new RoundCompleted(new RoundCompletedMetadata(payoutAmount, payoutAmount, 0)));
             base.OnExit();            
         }
+        public override void Tick()
+        {
+            base.Tick();
 
+            if (gameEnvironmentMode == GameEnvironmentMode.Simulation)
+            {
+                machine.Fire(Trigger.TransactionDone, null);
+            }
+        }
         protected override void HandleEvent(AbstractEvent gameEvent)
         {
             switch (gameEvent)
             {
                 case AnimatingFinished animatingFinished:
                     machine.Fire(Trigger.TransactionDone, new RoundCompletedMetadata(payoutAmount, payoutAmount, 0));
-                    break;            
+                    break;
             }
         }
-    
+            
     }
 
 }

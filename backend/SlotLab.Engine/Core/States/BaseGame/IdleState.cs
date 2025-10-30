@@ -21,6 +21,7 @@ namespace SlotLab.Engine.Core
 
         public override void OnEnter()
         {
+
             base.OnEnter();
 
             if (gameEnvironmentMode == GameEnvironmentMode.Simulation)
@@ -29,7 +30,7 @@ namespace SlotLab.Engine.Core
                 machine.Fire(Trigger.SpinRequested, metadata);
                 return;
             }
-
+             Console.WriteLine("🕹️ Subscribing for manual SpinRequestEvent...");
             _gameplayHandler = e => HandleEvent((AbstractEvent)e);
             gameEventBus.Subscribe(_gameplayHandler);
         }

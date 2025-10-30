@@ -16,28 +16,71 @@ namespace SlotLab.Engine.Core
 
         public virtual void InitializeFSM() {}
 
-        public void Tick(GameMechanicInputData input)
+        public void Tick()
         {
             if (CurrentState == null)
                 throw new InvalidOperationException("State machine has no active state.");
 
-            CurrentState.Tick(input);
+            CurrentState.Tick();
         }
 
         public void Fire(Trigger trigger, object? metadata = null)
         {
-            var key = (CurrentState.GetType(), trigger);
+            var stateType = CurrentState.GetType();
+            var key = (stateType, trigger);
+
+            // 1️⃣ Primer intent: coincidència exacta
             if (_routes.TryGetValue(key, out var factory))
             {
                 var next = factory(this, metadata);
                 ChangeState(next);
+                return;
             }
-            else
+
+            // 2️⃣ Segon intent: si és genèric, prova amb el tipus obert (p. ex. EvaluationState<>)
+            if (stateType.IsGenericType)
             {
-                // Opcional: log o ignorar
-                // Console.WriteLine($"No route for ({CurrentState.GetType().Name}, {trigger})");
+                var openGeneric = stateType.GetGenericTypeDefinition();
+                var openKey = (openGeneric, trigger);
+                if (_routes.TryGetValue(openKey, out factory))
+                {
+                    var next = factory(this, metadata);
+                    ChangeState(next);
+                    return;
+                }
             }
+
+            // 3️⃣ Tercer intent: buscar a les classes base (per subclasses heretades)
+            var baseType = stateType.BaseType;
+            while (baseType != null)
+            {
+                var baseKey = (baseType, trigger);
+                if (_routes.TryGetValue(baseKey, out factory))
+                {
+                    var next = factory(this, metadata);
+                    ChangeState(next);
+                    return;
+                }
+
+                if (baseType.IsGenericType)
+                {
+                    var openBase = baseType.GetGenericTypeDefinition();
+                    var openBaseKey = (openBase, trigger);
+                    if (_routes.TryGetValue(openBaseKey, out factory))
+                    {
+                        var next = factory(this, metadata);
+                        ChangeState(next);
+                        return;
+                    }
+                }
+
+                baseType = baseType.BaseType;
+            }
+
+            // 4️⃣ Sense coincidència — log informatiu
+            Console.WriteLine($"⚠️ No route for ({stateType.Name}, {trigger})");
         }
+
 
         protected virtual void SetInitialState(AbstractGameState newState)
         {

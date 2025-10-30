@@ -1,5 +1,11 @@
-public enum GameEnvironmentMode
+using SlotLab.Engine.Core;
+using SlotLab.Engine.Core.Base;
+
+namespace SlotLab.Engine.Models
 {
-    Production,
-    Simulation    
+    public enum GameEnvironmentMode
+    {
+        Production,
+        Simulation
+    }
 }

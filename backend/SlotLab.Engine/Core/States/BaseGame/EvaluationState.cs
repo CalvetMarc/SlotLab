@@ -29,7 +29,7 @@ namespace SlotLab.Engine.Core
 
             TOutput evaluationData = gridEvaluator.Evaluate(visibleWindow);
             decimal payoutAmmount = gridPayoutCalculator.Calculate(bet, evaluationData);
-            machine.Fire(Trigger.SpinFinished, payoutAmmount);
+            machine.Fire(Trigger.EvaluationDone, payoutAmmount);
         }
 
         public override void OnExit()

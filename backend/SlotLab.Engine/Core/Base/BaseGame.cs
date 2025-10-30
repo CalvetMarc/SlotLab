@@ -32,6 +32,7 @@ namespace SlotLab.Engine.Games
                 machine, gameEventBus, baseGameData.ActiveBet, ((SpinResultData)metadata!).VisibleWindow, baseGameData.GridGameMechanicComponents.GameEvaluator, baseGameData.GridGameMechanicComponents.GridPayoutCalculator
             ));
             Map<EvaluationState<TOutput>>(Trigger.EvaluationDone, (machine, metadata) => slotStateFactory.CreatePayoutState(machine, gameEventBus, (decimal)metadata!, baseGameData.GameEnvMode));
+            Map<PayoutState<TOutput>>(Trigger.TransactionDone, (machine, metadata) => slotStateFactory.CreateIdleState(machine, gameEventBus, baseGameData.IsAuto, baseGameData.GameEnvMode));
 
             SetInitialState(slotStateFactory.CreateIdleState(this, gameEventBus, baseGameData.IsAuto, baseGameData.GameEnvMode));
         }                      

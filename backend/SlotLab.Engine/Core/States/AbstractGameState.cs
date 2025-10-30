@@ -32,6 +32,6 @@ namespace SlotLab.Engine.Core
         /// Executes one logic step in this state.
         /// Must be implemented by each specific state (BaseGame, Bonus, etc.).
         /// </summary>
-        public virtual void Tick(GameMechanicInputData input) { }
+        public virtual void Tick() { }
     }
 }

@@ -18,7 +18,7 @@ namespace SlotLab.Engine.Core
         /// Executes one logical "tick" or frame of the game flow.
         /// Typically, this represents one spin or action within this state.
         /// </summary>
-        void Tick(GameMechanicInputData input);  
+        void Tick();  
         
         /// <summary>
         /// Called when leaving this state (cleanup or transition preparation).
